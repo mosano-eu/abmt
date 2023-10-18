@@ -1,4 +1,5 @@
 import { IMigrationMetadata, MigrationDirection } from './migration';
+import { SyncOrAsync } from './typings';
 
 export interface IStoredMigrationReference
   extends Pick<IMigrationMetadata, 'id' | 'name' | 'created_at'> {
@@ -9,12 +10,10 @@ export interface IStoredMigrationReference
 }
 
 export interface IStorageProvider {
-  upsertReferences(
-    ref: Array<Pick<IStoredMigrationReference, 'id' | 'name' | 'created_at'>>,
-  ): Promise<void>;
-  getStoredMigrationReferences(): Promise<IStoredMigrationReference[]>;
+  upsertReferences(ref: Array<IStoredMigrationReference>): SyncOrAsync<void>;
+  getStoredMigrationReferences(): SyncOrAsync<IStoredMigrationReference[]>;
 }
 
 export interface IContextProvider<Context> {
-  getContext(): Promise<Context>;
+  getContext(): SyncOrAsync<Context>;
 }

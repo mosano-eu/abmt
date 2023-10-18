@@ -29,7 +29,7 @@ export class Migrator<Context> extends MigratorEvents {
 
     this.storageProvider = options.storageProvider;
     this.migrationsProvider = options.migrationsProvider;
-    this.getContext = this.getContext;
+    this.getContext = options.getContext;
   }
 
   ///
@@ -117,11 +117,12 @@ export class Migrator<Context> extends MigratorEvents {
 
     // execute migrations
     for (const { id, direction } of executionPlan) {
-      const migration = this.migrationsProvider.getMigration(id);
+      const migration = await this.migrationsProvider.getMigration(id);
+      const metadata = migration.getMetadata();
       let error: Error | undefined = undefined;
 
       try {
-        migration[direction](context);
+        await migration[direction](context);
       } catch (err) {
         error = err;
 
@@ -137,10 +138,23 @@ export class Migrator<Context> extends MigratorEvents {
           error,
         });
       }
+
+      // save to stored ref
+      await this.storageProvider.upsertReferences([
+        {
+          id: metadata.id,
+          name: metadata.name,
+          created_at: metadata.created_at,
+          last_applied: {
+            direction,
+            at: new Date(),
+          },
+        },
+      ]);
     }
   }
 
-  private log(message: string, context?: {}) {
+  private log(message: string, context?: unknown) {
     this.emit(EventType.Log, { message, context });
   }
 }

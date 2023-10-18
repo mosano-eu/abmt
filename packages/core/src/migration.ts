@@ -33,6 +33,7 @@ export class Migration<Context> {
   [MigrationDirection.DOWN]: MigrationDirectionFunction<Context>;
 
   constructor(options: MigrationOptions<Context>) {
+    this.metadata = options.metadata;
     this[MigrationDirection.UP] = options[MigrationDirection.UP] || noop;
     this[MigrationDirection.DOWN] = options[MigrationDirection.DOWN] || noop;
   }

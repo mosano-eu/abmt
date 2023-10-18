@@ -33,7 +33,7 @@ export enum EventType {
 
 export type TMigratorEvents = {
   [EventType.Error]: [Error];
-  [EventType.Log]: [{ message: string; context?: {} }];
+  [EventType.Log]: [{ message: string; context?: unknown }];
   [EventType.MigrationDirectionExecuted]: [
     | {
         successful: true;
