@@ -1,0 +1,29 @@
+{
+  "name": "@abmf/migration-provider-embedded",
+  "version": "0.0.1",
+  "description": "Provides ABMF the ability to capture migrations programatically",
+  "repository": "https://github.com/mosano-eu/abmf",
+  "author": "Jose Moreira <jmoreira@mosano.eu>",
+  "license": "MIT",
+  "private": false,
+  "main": "./dist/cjs/index.min.cjs",
+  "module": "./dist/esm/index.min.mjs",
+  "source": "./src/index.ts",
+  "types": "./dist/cjs/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.min.mjs",
+      "require": "./dist/cjs/index.min.cjs",
+      "types": "./dist/cjs/index.d.ts"
+    }
+  },
+  "scripts": {
+    "dev": "rollup --config --sourcemap --watch",
+    "build": "rollup --config --sourcemap",
+    "lint": "eslint",
+    "test": "jest"
+  },
+  "peerDependencies": {
+    "@abmf/core": "0.0.1"
+  }
+}

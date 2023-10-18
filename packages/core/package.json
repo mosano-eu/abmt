@@ -1,0 +1,26 @@
+{
+  "name": "@abmf/core",
+  "version": "0.0.1",
+  "description": "ABMF core includes all the core functionality and typescript interfaces for extending it",
+  "repository": "https://github.com/mosano-eu/abmf",
+  "author": "Jose Moreira <jmoreira@mosano.eu>",
+  "license": "MIT",
+  "private": false,
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/esm/index.mjs",
+  "source": "./src/index.ts",
+  "types": "./dist/cjs/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.mjs",
+      "require": "./dist/cjs/index.cjs",
+      "types": "./dist/cjs/index.d.ts"
+    }
+  },
+  "scripts": {
+    "dev": "rollup --config --sourcemap --watch",
+    "build": "rollup --config --sourcemap",
+    "lint": "eslint",
+    "test": "jest"
+  }
+}
