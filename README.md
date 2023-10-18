@@ -1,5 +1,5 @@
-# ABMF
-### a.k.a. A Better Migration Framework
+# A Better Migration Framework (a.k.a. ABMF)
+
 
 An agnostic framework to handle database maintainability needs, such as executing schema migrations, data seeding, and other type of time-based versioning operations.
 
