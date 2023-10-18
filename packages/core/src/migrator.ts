@@ -38,13 +38,13 @@ export class Migrator<Context> extends MigratorEvents {
 
   async sync() {
     const migrations = await this.getAllMigrations();
-    this.syncWithStorage(migrations);
+    await this.syncWithStorage(migrations);
   }
 
   async goto(id?: MigrationIdentifier) {
     // get local migrations
     const migrations = await this.getAllMigrations();
-    this.syncWithStorage(migrations);
+    await this.syncWithStorage(migrations);
 
     const targetIndex = id
       ? migrations.findIndex((migration) => migration.id === id)
@@ -123,6 +123,19 @@ export class Migrator<Context> extends MigratorEvents {
 
       try {
         await migration[direction](context);
+
+        // save to stored ref
+        await this.storageProvider.upsertReferences([
+          {
+            id: metadata.id,
+            name: metadata.name,
+            created_at: metadata.created_at,
+            last_applied: {
+              direction,
+              at: new Date(),
+            },
+          },
+        ]);
       } catch (err) {
         error = err;
 
@@ -134,23 +147,10 @@ export class Migrator<Context> extends MigratorEvents {
         throw new Error('MigrationError');
       } finally {
         this.emit(EventType.MigrationDirectionExecuted, {
-          successful: !!error,
+          successful: !error,
           error,
         });
       }
-
-      // save to stored ref
-      await this.storageProvider.upsertReferences([
-        {
-          id: metadata.id,
-          name: metadata.name,
-          created_at: metadata.created_at,
-          last_applied: {
-            direction,
-            at: new Date(),
-          },
-        },
-      ]);
     }
   }
 

@@ -10,7 +10,11 @@ export interface IStoredMigrationReference
 }
 
 export interface IStorageProvider {
-  upsertReferences(ref: Array<IStoredMigrationReference>): SyncOrAsync<void>;
+  upsertReferences(
+    ref: Array<
+      Pick<IStoredMigrationReference, 'id'> & Partial<IStoredMigrationReference>
+    >,
+  ): SyncOrAsync<void>;
   getStoredMigrationReferences(): SyncOrAsync<IStoredMigrationReference[]>;
 }
 

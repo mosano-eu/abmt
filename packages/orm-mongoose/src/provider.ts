@@ -3,9 +3,10 @@ import {
   IContextProvider,
   IStoredMigrationReference,
 } from '@abmf/core';
-import { MongooseORMContext } from './typings';
 import { Connection, Model } from 'mongoose';
+import { MongooseORMContext } from './typings';
 import { getMigrationModel } from './model';
+import cloneDeep from 'lodash/cloneDeep';
 
 type MongooseORMProviderOptions = {
   connection: Connection;
@@ -18,39 +19,58 @@ export class MongooseORMProvider
   private connection: Connection;
   private model: Model<IStoredMigrationReference>;
 
-  constructor({
-    connection,
-    collectionName = 'migrations',
-  }: MongooseORMProviderOptions) {
+  constructor({ connection, collectionName }: MongooseORMProviderOptions) {
     this.connection = connection;
-    this.model = getMigrationModel(connection, collectionName);
+    this.model = getMigrationModel(connection, collectionName || 'migrations');
   }
 
+  ///
+  // Public methods
+  ///
+
   async upsertReferences(
-    refs: Pick<IStoredMigrationReference, 'id' | 'name' | 'created_at'>[],
+    refs: Array<
+      Pick<IStoredMigrationReference, 'id'> & Partial<IStoredMigrationReference>
+    >,
   ): Promise<void> {
     await this.model.bulkWrite(
       refs.map((ref) => ({
         updateOne: {
-          upsert: true,
           filter: {
             id: { $eq: ref.id },
           },
-          update: ref,
+          update: { $set: cloneDeep(ref) },
+          upsert: true,
         },
       })),
     );
   }
 
-  async getStoredMigrationReferences(): Promise<IStoredMigrationReference[]> {
-    const refs = await this.model.find().sort({ created_at: 'asc' }).lean(true);
+  async getStoredMigrationReferences() {
+    const refs: IStoredMigrationReference[] = [];
+
+    for await (const doc of this.model
+      .find()
+      .sort({ created_at: 'asc' })
+      .lean(true)) {
+      refs.push({
+        id: doc.id,
+        name: doc.name,
+        created_at: doc.created_at,
+        last_applied: doc.last_applied && {
+          at: doc.last_applied.at,
+          direction: doc.last_applied.direction,
+        },
+      });
+    }
+
     return refs;
   }
 
   async getContext(): Promise<MongooseORMContext> {
     return {
       mongoose: {
-        connection: this.connection,
+        connection: await this.connection.asPromise(),
       },
     };
   }

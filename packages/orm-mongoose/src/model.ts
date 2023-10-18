@@ -10,6 +10,10 @@ export function getMigrationModel(
       id: { type: String, unique: true },
       name: String,
       created_at: Date,
+      last_applied: {
+        direction: { type: String },
+        at: Date,
+      },
     },
     {
       collection,
