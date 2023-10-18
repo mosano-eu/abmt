@@ -27,6 +27,7 @@
     "mongoose": "^7.6.3"
   },
   "dependencies": {
-    "@abmf/core": "0.0.1"
+    "@abmf/core": "0.0.1",
+    "mongoose": "^7.6.3"
   }
 }

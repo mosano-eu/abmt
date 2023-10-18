@@ -84,7 +84,7 @@ export class Migrator<Context> extends MigratorEvents {
     const migrations = await this.migrationsProvider.getAllMigrations();
 
     return [...migrations].sort((a, b) =>
-      a.metadata.created_at > b.metadata.created_at ? 1 : 0,
+      a.getMetadata().created_at > b.getMetadata().created_at ? 1 : 0,
     );
   }
 
@@ -97,15 +97,16 @@ export class Migrator<Context> extends MigratorEvents {
     return migrations.map((migration) => {
       // get stored references
       const storedReference = references.find((ref) => ref.id === migration.id);
+      const metadata = migration.getMetadata();
 
-      return { migration, storedReference };
+      return { migration, metadata, storedReference };
     });
   }
 
   private async syncWithStorage(migrations: Migration<Context>[]) {
     // upsert all the local references on orm migrations ref storage
     await this.storageProvider.upsertReferences(
-      migrations.map((migration) => migration.metadata),
+      migrations.map((migration) => migration.getMetadata()),
     );
   }
 

@@ -14,18 +14,21 @@ export type MigrationDirectionFunction<Context> = (
 export interface IMigrationMetadata {
   name: string;
   created_at: Date;
-  id?: MigrationIdentifier;
+  id: MigrationIdentifier;
   optional?: boolean;
 }
 
+export type IMigrationMetadataWithOptionalID = Omit<IMigrationMetadata, 'id'> &
+  Partial<Pick<IMigrationMetadata, 'id'>>;
+
 export type MigrationOptions<Context> = {
-  metadata: IMigrationMetadata;
+  metadata: IMigrationMetadataWithOptionalID;
   [MigrationDirection.UP]?: MigrationDirectionFunction<Context>;
   [MigrationDirection.DOWN]?: MigrationDirectionFunction<Context>;
 };
 
 export class Migration<Context> {
-  metadata: IMigrationMetadata;
+  private metadata: IMigrationMetadataWithOptionalID;
   [MigrationDirection.UP]: MigrationDirectionFunction<Context>;
   [MigrationDirection.DOWN]: MigrationDirectionFunction<Context>;
 
@@ -39,6 +42,13 @@ export class Migration<Context> {
       this.metadata.id ||
       `${this.metadata.created_at.getTime()}-${this.metadata.name}`
     );
+  }
+
+  getMetadata(): IMigrationMetadata {
+    return {
+      ...this.metadata,
+      id: this.id,
+    };
   }
 }
 

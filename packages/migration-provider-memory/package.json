@@ -1,19 +1,19 @@
 {
-  "name": "@abmf/migration-provider-embedded",
+  "name": "@abmf/migration-provider-memory",
   "version": "0.0.1",
   "description": "Provides ABMF the ability to capture migrations programatically",
   "repository": "https://github.com/mosano-eu/abmf",
   "author": "Jose Moreira <jmoreira@mosano.eu>",
   "license": "MIT",
   "private": false,
-  "main": "./dist/cjs/index.min.cjs",
-  "module": "./dist/esm/index.min.mjs",
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/esm/index.mjs",
   "source": "./src/index.ts",
   "types": "./dist/cjs/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/esm/index.min.mjs",
-      "require": "./dist/cjs/index.min.cjs",
+      "import": "./dist/esm/index.mjs",
+      "require": "./dist/cjs/index.cjs",
       "types": "./dist/cjs/index.d.ts"
     }
   },
@@ -24,6 +24,9 @@
     "test": "jest"
   },
   "peerDependencies": {
+    "@abmf/core": "0.0.1"
+  },
+  "devDependencies": {
     "@abmf/core": "0.0.1"
   }
 }

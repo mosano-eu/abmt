@@ -1,2 +1,2 @@
-export * from './context';
+export * from './typings';
 export * from './provider';
