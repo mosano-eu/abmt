@@ -6,16 +6,8 @@
   "author": "Jose Moreira <jmoreira@mosano.eu>",
   "license": "MIT",
   "private": true,
-  "main": "./dist/cjs/cli.min.cjs",
-  "module": "./dist/esm/cli.min.mjs",
-  "source": "./src/cli.ts",
-  "types": "./dist/cjs/cli.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/esm/cli.min.mjs",
-      "require": "./dist/cjs/cli.min.cjs",
-      "types": "./dist/cjs/cli.d.ts"
-    }
+  "bin": {
+    "abmf": "./dist/cjs/cli.min.js"
   },
   "scripts": {
     "dev": "rollup --config --sourcemap --watch",
@@ -24,6 +16,20 @@
     "test": "jest"
   },
   "peerDependencies": {
-    "@abmf/core": "0.0.1"
+    "@abmf/core": "0.0.1",
+    "@abmf/orm-mongoose": "0.0.1",
+    "mongoose": "^7.6.3"
+  },
+  "peerDependenciesMeta": {
+    "@abmf/orm-mongoose": {
+      "optional": true
+    },
+    "mongoose": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "commander": "^11.1.0",
+    "@abmf/migrations-fs": "0.0.1"
   }
 }

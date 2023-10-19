@@ -8,18 +8,18 @@ import { MongooseORMContext } from './typings';
 import { getMigrationModel } from './model';
 import cloneDeep from 'lodash/cloneDeep';
 
-type MongooseORMProviderOptions = {
+type MongooseORMOptions = {
   connection: Connection;
   collectionName?: string;
 };
 
-export class MongooseORMProvider
+export class MongooseORM
   implements IStorageProvider, IContextProvider<MongooseORMContext>
 {
   private connection: Connection;
   private model: Model<IStoredMigrationReference>;
 
-  constructor({ connection, collectionName }: MongooseORMProviderOptions) {
+  constructor({ connection, collectionName }: MongooseORMOptions) {
     this.connection = connection;
     this.model = getMigrationModel(connection, collectionName || 'migrations');
   }

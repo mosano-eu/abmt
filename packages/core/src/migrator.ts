@@ -1,4 +1,4 @@
-import { IMigrationsProviderAdapter } from './migrations-provider';
+import { IMigrationsProvider } from './migrations-provider';
 import { IStorageProvider } from './orm';
 import {
   Migration,
@@ -10,7 +10,7 @@ import { EventType, MigratorEvents } from './events';
 
 export type MigratorOptions<Context> = {
   storageProvider: IStorageProvider;
-  migrationsProvider: IMigrationsProviderAdapter<Context>;
+  migrationsProvider: IMigrationsProvider<Context>;
   getContext: () => SyncOrAsync<Context>;
 };
 
@@ -20,7 +20,7 @@ type ExecutionPlan = Array<{
 }>;
 
 export class Migrator<Context> extends MigratorEvents {
-  private migrationsProvider: IMigrationsProviderAdapter<Context>;
+  private migrationsProvider: IMigrationsProvider<Context>;
   private storageProvider: IStorageProvider;
   private getContext: MigratorOptions<Context>['getContext'];
 

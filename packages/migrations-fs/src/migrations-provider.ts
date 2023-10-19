@@ -1,18 +1,18 @@
-import { IMigrationsProviderAdapter, Migration } from '@abmf/core';
+import { IMigrationsProvider, Migration } from '@abmf/core';
 import {
   matchAndGetMigrationsFromMigrationsPath,
   resolveMigrationsPath,
 } from './fs';
 
-type FSMigrationProviderAdapterOptions = {
+type FSMigrationsProviderOptions = {
   migrationsPath: string;
   migrationsPattern?: RegExp;
 };
 
 const defaultMigrationsPattern = /.+\.(js|ts|cjs|mjs)/;
 
-export class FSMigrationProviderAdapter<Context>
-  implements IMigrationsProviderAdapter<Context>
+export class FSMigrationsProvider<Context>
+  implements IMigrationsProvider<Context>
 {
   readonly migrationsPath: string;
   private migrations = new Map<string, Migration<Context>>();
@@ -20,7 +20,7 @@ export class FSMigrationProviderAdapter<Context>
   constructor({
     migrationsPath,
     migrationsPattern = defaultMigrationsPattern,
-  }: FSMigrationProviderAdapterOptions) {
+  }: FSMigrationsProviderOptions) {
     this.migrationsPath = resolveMigrationsPath(migrationsPath);
 
     for (const migration of matchAndGetMigrationsFromMigrationsPath(

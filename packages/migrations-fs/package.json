@@ -1,7 +1,7 @@
 {
-  "name": "@abmf/migration-provider-memory",
+  "name": "@abmf/migrations-fs",
   "version": "0.0.1",
-  "description": "Provides ABMF the ability to capture migrations programatically",
+  "description": "Provides ABMF the ability to capture migrations defined as individual files",
   "repository": "https://github.com/mosano-eu/abmf",
   "author": "Jose Moreira <jmoreira@mosano.eu>",
   "license": "MIT",

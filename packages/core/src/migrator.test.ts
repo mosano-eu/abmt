@@ -1,5 +1,5 @@
 import {
-  IMigrationsProviderAdapter,
+  IMigrationsProvider,
   IStorageProvider,
   IStoredMigrationReference,
 } from '.';
@@ -80,7 +80,7 @@ function buildMigrator(migrationsOpts: MigrationOptions<TestContext>[]) {
   );
   const storedMigrationsMap = new Map<string, IStoredMigrationReference>();
 
-  const migrationsProvider: IMigrationsProviderAdapter<TestContext> = {
+  const migrationsProvider: IMigrationsProvider<TestContext> = {
     getAllMigrations() {
       return [...migrationsMap.values()];
     },

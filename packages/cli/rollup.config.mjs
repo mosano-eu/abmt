@@ -1,31 +1,34 @@
-// import globals from 'rollup-plugin-node-globals';
-// import builtins from 'rollup-plugin-node-builtins';
-// import typescript from '@rollup/plugin-typescript';
-// import commonjs from '@rollup/plugin-commonjs';
-// import terser from '@rollup/plugin-terser';
-// import pkg from './package.json' assert { type: 'json' };
+import globals from 'rollup-plugin-node-globals';
+import builtins from 'rollup-plugin-node-builtins';
+import { swc, defineRollupSwcOption } from 'rollup-plugin-swc3';
+import pkg from './package.json' assert { type: 'json' };
 
-// const minifiedOutputs = [
-//   {
-//     file: pkg.exports['.'].import,
-//     format: 'esm',
-//   },
-//   {
-//     file: pkg.exports['.'].require,
-//     format: 'cjs',
-//   },
-// ];
+const input = 'src/cli.ts';
 
-// const unminifiedOutputs = minifiedOutputs.map(({ file, ...rest }) => ({
-//   ...rest,
-//   file: file.replace('.min.', '.'),
-//   plugins: [terser()],
-// }));
-
-// export default {
-//   input: 'src/index.ts',
-//   output: [...unminifiedOutputs, ...minifiedOutputs],
-//   plugins: [globals(), builtins(), commonjs(), typescript()],
-// };
-
-export default [];
+export default [
+  {
+    input,
+    output: [
+      {
+        file: pkg.bin.abmf,
+        format: 'cjs',
+      },
+    ],
+    plugins: [
+      globals(),
+      builtins(),
+      swc(
+        defineRollupSwcOption({
+          sourceMaps: true,
+          minify: true,
+          jsc: {
+            parser: {
+              syntax: 'typescript',
+            },
+            target: 'es2016',
+          },
+        }),
+      ),
+    ],
+  },
+];
