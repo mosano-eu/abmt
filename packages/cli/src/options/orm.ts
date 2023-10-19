@@ -37,16 +37,13 @@ export function getOrmOptions(migrationType: MigrationType): Option[] {
   return flatten([ormOption, ...Object.values(optionsByPlatform)]);
 }
 
-export function getPlatformClient<Context>(
-  cmd: Command,
-  orm: PlatformKey,
-): {
-  storageAdapter: IStorageProvider;
-  contextAdapter: IContextProvider<Context>;
-} {
+export async function getORMProviders<Context>(cmd: Command): Promise<{
+  storageProvider: IStorageProvider;
+  contextProvider: IContextProvider<Context>;
+}> {
   const options = cmd.optsWithGlobals();
 
-  switch (orm) {
+  switch (options.orm) {
     case PlatformKey.Mongoose: {
       const { MongooseORM } = require('@abmf/orm-mongoose');
       const { createConnection } = require('mongoose');
@@ -57,9 +54,12 @@ export function getPlatformClient<Context>(
         collection: options.mongooseMigrationsCollection,
       });
 
+      // wait for the connection
+      await connection.asPromise();
+
       return {
-        storageAdapter: orm,
-        contextAdapter: orm,
+        storageProvider: orm,
+        contextProvider: orm,
       };
     }
 

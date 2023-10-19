@@ -11,6 +11,7 @@ import { seedsCmd } from './commands/seeds';
   dotenv.config({ path: '.env.local' });
 
   const program = new Command();
+  program.version('PKG_VERSION');
 
   program
 

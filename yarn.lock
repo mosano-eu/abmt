@@ -1086,6 +1086,14 @@
     is-reference "1.2.1"
     magic-string "^0.30.3"
 
+"@rollup/plugin-replace@^5.0.4":
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/@rollup/plugin-replace/-/plugin-replace-5.0.4.tgz#fef548dc751d06747e8dca5b0e8e1fbf647ac7e1"
+  integrity sha512-E2hmRnlh09K8HGT0rOnnri9OTh+BILGr7NVJGB30S4E3cLRn3J0xjdiyOZ74adPs4NiAMgrjUMGAZNJDBgsdmQ==
+  dependencies:
+    "@rollup/pluginutils" "^5.0.1"
+    magic-string "^0.30.3"
+
 "@rollup/plugin-swc@^0.2.1":
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-swc/-/plugin-swc-0.2.1.tgz#9ab9ff4c04ae2581731dbf84a9ade35db7dac6af"
