@@ -12,7 +12,10 @@ const listCmd = createCommand('list')
   .action(
     captureErrors(async () => {
       const { migrator } = await buildMigrator(migrateCmd);
+      console.log('yeye');
       const migrations = await migrator.list();
+      console.log('yey2');
+      console.log({ migrations });
 
       const table = new Table({
         head: ['ID', 'Status', 'Applied At'],

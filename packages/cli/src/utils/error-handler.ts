@@ -6,6 +6,7 @@ export function captureErrors<Args, T>(
       return fn(...args);
     } catch (err) {
       handleError(err);
+      throw err;
     }
   };
 }

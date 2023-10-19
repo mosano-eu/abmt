@@ -42,20 +42,24 @@ export class Migrator<Context> extends MigratorEvents {
   }
 
   async list() {
+    console.log('aqui 1');
     const migrations = await this.getAllMigrations();
+    console.log('aqui 2');
     const migrationsAndStoredReferences =
       await this.getMigrationsStoredReferences(migrations);
-
+    console.log('aqui 3');
     const listOfMigrations: Array<{
       id: string;
       status: 'new' | 'up' | 'down';
       applied_at?: Date;
     }> = [];
 
+    console.log('aqui 4');
     for (const {
       migration,
       storedReference,
     } of migrationsAndStoredReferences) {
+      console.log('aqui 5 - loop');
       listOfMigrations.push({
         id: migration.id,
         status:
@@ -64,6 +68,7 @@ export class Migrator<Context> extends MigratorEvents {
         applied_at: storedReference?.last_applied?.at,
       });
     }
+    console.log('aqui 6');
 
     return listOfMigrations;
   }
@@ -118,8 +123,10 @@ export class Migrator<Context> extends MigratorEvents {
   private async getMigrationsStoredReferences(
     migrations: Migration<Context>[],
   ) {
+    console.log('before');
     const references =
       await this.storageProvider.getStoredMigrationReferences();
+    console.log('after');
 
     return migrations.map((migration) => {
       // get stored references

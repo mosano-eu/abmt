@@ -1,5 +1,6 @@
 #!/bin/env node
 
+import './utils/swc-registration';
 import { Command } from 'commander';
 import dotenv from 'dotenv';
 
