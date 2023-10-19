@@ -5,7 +5,7 @@ import { getMigrationsProvider } from '../options/migrations';
 
 export async function buildMigrator(cmd: Command) {
   const { contextProvider, storageProvider } = await getORMProviders(cmd);
-  const migrationsProvider = await getMigrationsProvider(cmd);
+  const migrationsProvider = getMigrationsProvider(cmd);
 
   const migrator = new Migrator({
     migrationsProvider,

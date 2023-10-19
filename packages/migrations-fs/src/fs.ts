@@ -12,6 +12,7 @@ export function resolveMigrationsPath(providedPath: string) {
 
   for (const patharr of patharrs) {
     const fPath = resolve(...patharr);
+
     if (isDir(fPath)) return fPath;
   }
 

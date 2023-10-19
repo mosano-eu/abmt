@@ -2,6 +2,7 @@ import { IContextProvider, IStorageProvider } from '@abmf/core';
 import { Command, Option, createOption } from 'commander';
 import flatten from 'lodash/flatten';
 import { MigrationType } from '../typings';
+import { notifyOnTerminal } from '../utils/cli';
 
 export enum PlatformKey {
   Mongoose = 'mongoose',
@@ -54,8 +55,17 @@ export async function getORMProviders<Context>(cmd: Command): Promise<{
         collection: options.mongooseMigrationsCollection,
       });
 
-      // wait for the connection
-      await connection.asPromise();
+      // handle hooks
+      // wait for the connection to be established
+      await notifyOnTerminal('Connecting to MongoDB', () =>
+        connection.asPromise(),
+      );
+
+      cmd.hook('postAction', async () => {
+        await notifyOnTerminal('Closing MongoDB connection', () =>
+          connection.close(),
+        );
+      });
 
       return {
         storageProvider: orm,

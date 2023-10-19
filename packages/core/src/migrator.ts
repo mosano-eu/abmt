@@ -41,6 +41,33 @@ export class Migrator<Context> extends MigratorEvents {
     await this.syncWithStorage(migrations);
   }
 
+  async list() {
+    const migrations = await this.getAllMigrations();
+    const migrationsAndStoredReferences =
+      await this.getMigrationsStoredReferences(migrations);
+
+    const listOfMigrations: Array<{
+      id: string;
+      status: 'new' | 'up' | 'down';
+      applied_at?: Date;
+    }> = [];
+
+    for (const {
+      migration,
+      storedReference,
+    } of migrationsAndStoredReferences) {
+      listOfMigrations.push({
+        id: migration.id,
+        status:
+          ((!storedReference || !storedReference.last_applied) && 'new') ||
+          storedReference.last_applied.direction,
+        applied_at: storedReference?.last_applied?.at,
+      });
+    }
+
+    return listOfMigrations;
+  }
+
   async goto(id?: MigrationIdentifier) {
     // get local migrations
     const migrations = await this.getAllMigrations();

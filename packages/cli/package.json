@@ -29,7 +29,9 @@
     }
   },
   "dependencies": {
-    "commander": "^11.1.0",
-    "@abmf/migrations-fs": "0.0.1"
+    "@abmf/migrations-fs": "0.0.1",
+    "chalk": "4",
+    "cli-table": "^0.3.11",
+    "commander": "^11.1.0"
   }
 }

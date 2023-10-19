@@ -3,7 +3,7 @@ import flatten from 'lodash/flatten';
 import { MigrationType } from '../typings';
 import { FSMigrationsProvider } from '@abmf/migrations-fs';
 
-export function getOrmOptions(migrationType: MigrationType): Option[] {
+export function getMigrationsOptions(migrationType: MigrationType): Option[] {
   const migrationsPath = createOption(
     '-p,--migrations-path <migrationsPath>',
     'relative or absolute path to the target migrations directory',
@@ -19,7 +19,7 @@ export function getOrmOptions(migrationType: MigrationType): Option[] {
   return flatten([migrationsPath, migrationsPattern]);
 }
 
-export async function getMigrationsProvider<Context>(cmd: Command) {
+export function getMigrationsProvider(cmd: Command) {
   const options = cmd.optsWithGlobals();
 
   return new FSMigrationsProvider({
