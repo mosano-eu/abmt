@@ -1,0 +1,39 @@
+name: test
+
+on:
+  push:
+    branches:
+      - "master"
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ["18"]
+    name: Lint on Node ${{ matrix.node }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+      - run: yarn install
+      - run: yarn lint
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ["18"]
+    name: Test on Node ${{ matrix.node }} # @TODO: add multiple ORM versions?
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+      - run: yarn install
+      - run: yarn build
+      - run: yarn test
