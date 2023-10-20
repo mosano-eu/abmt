@@ -1,5 +1,5 @@
 import { IMigrationsProvider } from './migrations-provider';
-import { IStorageProvider } from './orm';
+import { IStorageProvider } from './storage-provider';
 import {
   IMigrationMetadata,
   Migration,
