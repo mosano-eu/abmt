@@ -1,7 +1,5 @@
 import {
-  IMigrationsProvider,
   IStoredMigrationReference,
-  Migration,
   MigrationDirection,
   MigrationOptions,
   Migrator,
