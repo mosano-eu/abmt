@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "ABMF CLI - allows developers to use ABMF as a standalone framework",
   "repository": "https://github.com/mosano-eu/abmf",
-  "author": "Jose Moreira <jmoreira@mosano.eu>",
+  "author": "Dev Team <dev@mosano.eu>",
   "license": "MIT",
   "private": true,
   "bin": {

@@ -1,30 +1,91 @@
-# A Better Migration Framework (a.k.a. ABMF)
+# A Better Migration Tool (a.k.a. ABMF)
 
-An agnostic framework to handle database maintainability needs, such as executing schema migrations, data seeding, and other type of time-based versioning operations.
+framework-agnostic migration to handle database maintainability needs, such as executing schema migrations, data seeding, and other type of time-based versioning operations.
+
+> Notice: This project is in ALPHA stage. We're improving and keep releasing release candidates up until it's ready to be used in production.
 
 ## Table of Contents
 
-- [A Better Migration Framework (a.k.a. ABMF)](#a-better-migration-framework-aka-abmf)
+- [A Better Migration Tool (a.k.a. ABMF)](#a-better-migration-tool-aka-abmf)
   - [Table of Contents](#table-of-contents)
-  - [Installation](#installation)
   - [Features](#features)
-  - [Architecture](#architecture)
-  - [Usage](#usage)
+  - [Installation](#installation)
     - [CLI](#cli)
     - [Programmatic](#programmatic)
+  - [Architecture](#architecture)
+  - [Packages](#packages)
+  - [Usage](#usage)
+    - [CLI](#cli-1)
+    - [Programmatic](#programmatic-1)
   - [Contributing](#contributing)
+  - [Alternatives](#alternatives)
   - [License](#license)
-
-## Installation
-
-Explain how to install the project and any dependencies it may have. Provide step-by-step instructions or commands that users need to follow.
 
 ## Features
 
-- ✅ CLI to execute migrations without requiring changes in your project's code-base
-- ✅ Programmatic API to execute migrations by incluing the Migrator in your project's code-base
-- Supports multiple ORMs / Datastores:
-  - ✅ Mongoose / MongoDB
+- 💻 Bult-in CLI to execute migrations
+- 👨‍💻 Programmatic API to execute migrations
+- 🗄 Database-agnostic. Supports multiple ORMs / Datastores:
+  - Mongoose / MongoDB
+- ✅ Written in Typescript
+- ✅ Supports multiple storages for the migration data
+- ✅ Supports multiple migration providers
+- ✅ Supports custom contexts, so migrations can occur across multiple datastores
+- 🧐 [Usage examples](./packages/cli/examples/)
+
+## Installation
+
+### CLI
+
+```bash
+cd ./path/to/your/project;
+
+yarn add @abmf/cli @abmf/orm-mongoose;
+yarn exec abmf --help;
+```
+
+### Programmatic
+
+```bash
+cd ./path/to/your/project;
+
+yarn add @abmf/core @abmf/orm-mongoose @abmf/migrations-in-memory;
+```
+
+```typescript
+// src/migrator.ts
+import { Migrator } from '@abmf/core'
+import { MongooseORM } from '@abmf/orm-mongoose'
+
+///
+// ORM - Storage and Context provider
+//
+const connection = createConnection('mongodb://127.0.0.1:27017/your-database-name');
+// or
+// import { connection } from '../mongoose-connection'
+const orm = new MongooseORM({ connection })
+
+
+///
+// Migrations - migrations provider
+//
+import * as migrations from './migrations'
+const migrationsProvider = new InMemoryMigrationsProvider({ migrations })
+// or
+// import { FSMigrationsProvider } from '@abmf/migrations-fs'
+// const migrationsProvider = new FSMigrationsProvider({ migrationsPath: `./migrations` })
+
+const migrator = new Migrator({
+  migrationsProvider,
+  storageProvider: orm,
+  getContext: () => orm.getContext(),
+});
+
+export async function applyAll() {
+  await migrator.checkout();
+}
+```
+
 
 ## Architecture
 
@@ -36,16 +97,29 @@ ABMF is designed to support multiple ORMs that could be added in the future. The
 
 If your project requires something unusual, you can extend ABMF to support it. If you decide to add a new piece heck the [Contributing](#contributing) so you can help ABMF frow.
 
+## Packages
+
+| Package Name        | Category           | Description                                                                           | Stability  |
+|---------------------|--------------------|---------------------------------------------------------------------------------------|---|
+| [@abmf/core](./packages/core/)          | Core               | Provides the core functionality and interfaces for other packages to implement/extend | Alpha  |
+| [@abmf/cli](./packages/cli/)  | CLI                | Provides a CLI for integrating ABMF in a project without requiring changes to the code-base       | Alpha  |
+| [@abmf/orm-mongoose](./packages/orm-mongoose/)  | ORM                | Provides a Storage Provider and a Context Provider tied with Mongoose / MongoDB       | Alpha  |
+| [@abmf/migrations-fs](./packages/migrations-fs) | Migration Provider | Provides a Migration Provider that reads migrations from the FS                       | Alpha  |
+| [@abmf/migrations-in-memory](./packages/migrations-in-memory/) | Migration Provider | Provides a Migration Provider that takes Migrations directly from its constructor, allowing the injection of Migrations In-Memory. Ideal for programmatic approaches that already include a bundler for migrations                       | Alpha  |
+
 ## Usage
 
 ### CLI
 
-The CLI allows you to interact with the migrations without requiring any written code aside from the migrations themselves.
-
-
 ### Programmatic
 
 ## Contributing
+
+## Alternatives
+
+- [migrate-mongoose](https://github.com/balmasi/migrate-mongoose)
+- [ts-migrate-mongoose](https://github.com/ilovepixelart/ts-migrate-mongoose)
+- [umzug](https://github.com/sequelize/umzug)
 
 ## License
 

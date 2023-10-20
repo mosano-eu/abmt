@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Allows ABMF to store and execute migrations with Mongoose",
   "repository": "https://github.com/mosano-eu/abmf",
-  "author": "Jose Moreira <jmoreira@mosano.eu>",
+  "author": "Dev Team <dev@mosano.eu>",
   "license": "MIT",
   "private": false,
   "main": "./dist/cjs/index.min.cjs",

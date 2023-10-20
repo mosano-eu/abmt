@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "ABMF core includes all the core functionality and typescript interfaces for extending it",
   "repository": "https://github.com/mosano-eu/abmf",
-  "author": "Jose Moreira <jmoreira@mosano.eu>",
+  "author": "Dev Team <dev@mosano.eu>",
   "license": "MIT",
   "private": false,
   "main": "./dist/cjs/index.cjs",

@@ -1,16 +1,15 @@
+import { error } from './cli';
+
 export function captureErrors<Args, T>(
   fn: (...Args) => Promise<T>,
 ): (...Args) => Promise<T> {
-  return (...args) => {
+  return async (...args) => {
     try {
-      return fn(...args);
+      const ret = await fn(...args);
+      return ret;
     } catch (err) {
-      handleError(err);
-      throw err;
+      // display error in the CLI
+      error(err);
     }
   };
-}
-
-function handleError(err: Error) {
-  console.error(err);
 }

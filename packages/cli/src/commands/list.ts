@@ -1,16 +1,14 @@
 import { createCommand } from 'commander';
-import { setupCmdToOwnORM } from '../options/orm';
 import { buildMigrator } from '../utils/migrator';
 import { captureErrors } from '../utils/error-handler';
 import chalk from 'chalk';
-import { setupCmdToOwnMigrations } from '../options/migrations';
 import Table from 'cli-table';
 
-const listCmd = createCommand('list')
-  .description('lists all the included migrations')
+export const listCmd = createCommand('list')
+  .description('lists all the migrations')
   .action(
     captureErrors(async () => {
-      const { migrator } = await buildMigrator(migrateCmd);
+      const { migrator } = await buildMigrator(listCmd);
       const migrations = await migrator.list();
 
       const table = new Table({
@@ -33,20 +31,3 @@ const listCmd = createCommand('list')
       process.stdout.write(table.toString());
     }),
   );
-
-const migrateCmd = createCommand('migrate')
-  .description('migrates the database to a certain version')
-  .argument('[migration-id]', 'ID to the target migration')
-  .action(
-    captureErrors(async () => {
-      const { migrator } = await buildMigrator(migrateCmd);
-    }),
-  );
-
-export const migrationsCmd = createCommand('migrations')
-  .description('handles migrations towards schema and data versioned changes')
-  .addCommand(listCmd)
-  .addCommand(migrateCmd);
-
-setupCmdToOwnORM(migrationsCmd);
-setupCmdToOwnMigrations(migrationsCmd);

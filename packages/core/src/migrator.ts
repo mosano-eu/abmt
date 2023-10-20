@@ -67,7 +67,7 @@ export class Migrator<Context> extends MigratorEvents<Context> {
     return listOfMigrations;
   }
 
-  async goto(id?: MigrationIdentifier) {
+  async checkout(id?: MigrationIdentifier) {
     // get local migrations
     const migrations = await this.getAllMigrations();
     await this.syncWithStorage(migrations);
@@ -162,6 +162,7 @@ export class Migrator<Context> extends MigratorEvents<Context> {
 
       this.emit(EventType.MigrationDirectionGoingToExecute, {
         migration,
+        direction,
       });
 
       try {
@@ -183,14 +184,11 @@ export class Migrator<Context> extends MigratorEvents<Context> {
         error = err;
 
         this.emit(EventType.Error, error);
-        this.log(
-          `Migration ${id} had an error while executing: ${err.message}`,
-          { err },
-        );
         throw new Error('MigrationError');
       } finally {
         this.emit(EventType.MigrationDirectionExecuted, {
           migration,
+          direction,
           successful: !error,
           error,
         });
@@ -198,9 +196,9 @@ export class Migrator<Context> extends MigratorEvents<Context> {
     }
   }
 
-  private log(message: string, context?: unknown) {
-    this.emit(EventType.Log, { message, context });
-  }
+  // private log(message: string, context?: unknown) {
+  //   this.emit(EventType.Log, { message, context });
+  // }
 }
 
 export enum MigrationError {

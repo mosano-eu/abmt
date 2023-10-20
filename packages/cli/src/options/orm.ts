@@ -63,17 +63,12 @@ export async function getORMProviders<Context>(cmd: Command): Promise<{
 
       // handle hooks
       // wait for the connection to be established
-      await notifyOnTerminal('Connecting to MongoDB', () =>
+      await notifyOnTerminal(cmd, 'Connecting to MongoDB', () =>
         connection.asPromise(),
       );
 
       emitter.once('post-action', () => {
-        // action might not enter a new line
-        process.stdout.write('\n');
-
-        notifyOnTerminal('Closing MongoDB connection', () =>
-          connection.close(),
-        );
+        connection.close();
       });
 
       return {

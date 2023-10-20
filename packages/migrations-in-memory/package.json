@@ -1,9 +1,9 @@
 {
-  "name": "@abmf/migrations-memory",
+  "name": "@abmf/migrations-in-memory",
   "version": "0.0.1",
   "description": "Provides ABMF the ability to capture migrations programatically",
   "repository": "https://github.com/mosano-eu/abmf",
-  "author": "Jose Moreira <jmoreira@mosano.eu>",
+  "author": "Dev Team <dev@mosano.eu>",
   "license": "MIT",
   "private": false,
   "main": "./dist/cjs/index.cjs",

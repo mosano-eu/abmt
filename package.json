@@ -5,7 +5,7 @@
   "version": "0.0.1",
   "description": "A Better Migration Framework",
   "repository": "https://github.com/mosano/abmf",
-  "author": "Jose Moreira <jmoreira@mosano.eu>",
+  "author": "Dev Team <dev@mosano.eu>",
   "workspaces": {
     "packages": [
       "packages/*"

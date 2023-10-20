@@ -10,16 +10,26 @@ export default new Migration<MongooseORMContext>({
   async up({ mongoose: { connection } }) {
     const Countries = connection.collection('countries');
 
-    await Countries.findAndModify({
-      update: [{ $addFields: { code2: '$code' } }, { $project: { code: -1 } }],
-    });
+    await Countries.bulkWrite([
+      {
+        updateMany: {
+          filter: {},
+          update: [{ $set: { code2: '$code' } }, { $unset: 'code' }],
+        },
+      },
+    ]);
   },
 
   async down({ mongoose: { connection } }) {
     const Countries = connection.collection('countries');
 
-    await Countries.findAndModify({
-      update: [{ $addFields: { code: '$code2' } }, { $project: { code2: -1 } }],
-    });
+    await Countries.bulkWrite([
+      {
+        updateMany: {
+          filter: {},
+          update: [{ $set: { code: '$code2' } }, { $unset: 'code2' }],
+        },
+      },
+    ]);
   },
 });

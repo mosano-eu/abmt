@@ -18,7 +18,7 @@ export default new Migration<MongooseORMContext>({
           filter: {
             code: { $eq: country.code },
           },
-          update: country,
+          update: { $set: country },
         },
       })),
     );

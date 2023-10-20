@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-import { Migration } from './migration';
+import { Migration, MigrationDirection } from './migration';
 
 export class MigratorEvents<Context> {
   private emitter = new EventEmitter();
@@ -37,10 +37,10 @@ export type TMigratorEvents<Context> = {
   [EventType.Error]: [Error];
   [EventType.Log]: [{ message: string; context?: unknown }];
   [EventType.MigrationDirectionGoingToExecute]: [
-    { migration: Migration<Context> },
+    { migration: Migration<Context>; direction: MigrationDirection },
   ];
   [EventType.MigrationDirectionExecuted]: [
-    { migration: Migration<Context> } & (
+    { migration: Migration<Context>; direction: MigrationDirection } & (
       | {
           successful: true;
         }
