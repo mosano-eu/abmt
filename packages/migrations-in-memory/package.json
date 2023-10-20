@@ -1,9 +1,9 @@
 {
-  "name": "@abmf/migration-provider-fs",
+  "name": "@abmt/migrations-in-memory",
   "version": "0.0.1",
-  "description": "Provides ABMF the ability to capture migrations defined as individual files",
-  "repository": "https://github.com/mosano-eu/abmf",
-  "author": "Jose Moreira <jmoreira@mosano.eu>",
+  "description": "Provides ABMT the ability to capture migrations programatically",
+  "repository": "https://github.com/mosano-eu/abmt",
+  "author": "Dev Team <dev@mosano.eu>",
   "license": "MIT",
   "private": false,
   "main": "./dist/cjs/index.cjs",
@@ -24,9 +24,9 @@
     "test": "jest"
   },
   "peerDependencies": {
-    "@abmf/core": "0.0.1"
+    "@abmt/core": "0.0.1"
   },
   "devDependencies": {
-    "@abmf/core": "0.0.1"
+    "@abmt/core": "0.0.1"
   }
 }

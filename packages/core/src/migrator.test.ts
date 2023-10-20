@@ -1,5 +1,5 @@
 import {
-  IMigrationsProviderAdapter,
+  IMigrationsProvider,
   IStorageProvider,
   IStoredMigrationReference,
 } from '.';
@@ -35,7 +35,7 @@ describe('Migrator', () => {
       expect(migration.down).toBeCalledTimes(0);
     }
 
-    await migrator.goto(); // should default to latest
+    await migrator.checkout(); // should default to latest
 
     // expect all the up functions should have been called
     /// and expect all the down functions NOT to be called
@@ -80,7 +80,7 @@ function buildMigrator(migrationsOpts: MigrationOptions<TestContext>[]) {
   );
   const storedMigrationsMap = new Map<string, IStoredMigrationReference>();
 
-  const migrationsProvider: IMigrationsProviderAdapter<TestContext> = {
+  const migrationsProvider: IMigrationsProvider<TestContext> = {
     getAllMigrations() {
       return [...migrationsMap.values()];
     },

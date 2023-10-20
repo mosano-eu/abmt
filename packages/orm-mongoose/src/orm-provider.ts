@@ -2,24 +2,24 @@ import {
   IStorageProvider,
   IContextProvider,
   IStoredMigrationReference,
-} from '@abmf/core';
+} from '@abmt/core';
 import { Connection, Model } from 'mongoose';
 import { MongooseORMContext } from './typings';
 import { getMigrationModel } from './model';
 import cloneDeep from 'lodash/cloneDeep';
 
-type MongooseORMProviderOptions = {
+type MongooseORMOptions = {
   connection: Connection;
   collectionName?: string;
 };
 
-export class MongooseORMProvider
+export class MongooseORM
   implements IStorageProvider, IContextProvider<MongooseORMContext>
 {
   private connection: Connection;
   private model: Model<IStoredMigrationReference>;
 
-  constructor({ connection, collectionName }: MongooseORMProviderOptions) {
+  constructor({ connection, collectionName }: MongooseORMOptions) {
     this.connection = connection;
     this.model = getMigrationModel(connection, collectionName || 'migrations');
   }
@@ -48,11 +48,9 @@ export class MongooseORMProvider
 
   async getStoredMigrationReferences() {
     const refs: IStoredMigrationReference[] = [];
+    const iterator = this.model.find({});
 
-    for await (const doc of this.model
-      .find()
-      .sort({ created_at: 'asc' })
-      .lean(true)) {
+    for await (const doc of iterator) {
       refs.push({
         id: doc.id,
         name: doc.name,

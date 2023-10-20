@@ -1,14 +1,14 @@
 import {
-  IMigrationsProviderAdapter,
+  IMigrationsProvider,
   IStoredMigrationReference,
   Migration,
   MigrationDirection,
   MigrationOptions,
   Migrator,
-} from '@abmf/core';
+} from '@abmt/core';
 import { MongooseORMContext } from './typings';
 import { MongoMemoryServer } from 'mongodb-memory-server';
-import { MongooseORMProvider } from './provider';
+import { MongooseORM } from './orm-provider';
 import { createConnection } from 'mongoose';
 import { randomUUID } from 'crypto';
 
@@ -25,7 +25,7 @@ const mongoDBMemory = new MongoMemoryServer({
 beforeAll(async () => mongoDBMemory.start());
 afterAll(async () => mongoDBMemory.stop());
 
-describe('MongooseORMProvider', () => {
+describe('MongooseORM', () => {
   describe('ContextProvider', () => {
     it.todo('should provide an open connection as context');
   });
@@ -119,7 +119,7 @@ async function buildMigrator(
   migrationsOpts: MigrationOptions<MongooseORMContext>[],
 ) {
   const connection = createConnection(mongoDBMemory.getUri());
-  const ormProvider = new MongooseORMProvider({
+  const ormProvider = new MongooseORM({
     connection,
   });
 
@@ -129,7 +129,7 @@ async function buildMigrator(
       .map((migration) => [migration.id, migration]),
   );
 
-  const migrationsProvider: IMigrationsProviderAdapter<MongooseORMContext> = {
+  const migrationsProvider: IMigrationsProvider<MongooseORMContext> = {
     getAllMigrations() {
       return [...migrationsMap.values()];
     },

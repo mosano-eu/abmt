@@ -7,35 +7,51 @@ export enum MigrationDirection {
   DOWN = 'down',
 }
 
+export enum MigrationType {
+  Schema = 'schema',
+  Seed = 'seed',
+}
+
 export type MigrationDirectionFunction<Context> = (
   context: Context,
 ) => SyncOrAsync<void>;
 
 export interface IMigrationMetadata {
+  id: MigrationIdentifier;
   name: string;
   created_at: Date;
-  id: MigrationIdentifier;
-  optional?: boolean;
+  optional: boolean;
+  type: MigrationType;
 }
 
-export type IMigrationMetadataWithOptionalID = Omit<IMigrationMetadata, 'id'> &
-  Partial<Pick<IMigrationMetadata, 'id'>>;
+export type IMigrationMetadataWithOptionalAttributes = Omit<
+  IMigrationMetadata,
+  'id' | 'type' | 'optional'
+> &
+  Partial<Pick<IMigrationMetadata, 'id' | 'type' | 'optional'>>;
 
 export type MigrationOptions<Context> = {
-  metadata: IMigrationMetadataWithOptionalID;
+  metadata: IMigrationMetadataWithOptionalAttributes;
+  shouldBeExecuted?: () => SyncOrAsync<boolean>;
   [MigrationDirection.UP]?: MigrationDirectionFunction<Context>;
   [MigrationDirection.DOWN]?: MigrationDirectionFunction<Context>;
 };
 
 export class Migration<Context> {
-  private metadata: IMigrationMetadataWithOptionalID;
-  [MigrationDirection.UP]: MigrationDirectionFunction<Context>;
-  [MigrationDirection.DOWN]: MigrationDirectionFunction<Context>;
+  private metadata: IMigrationMetadataWithOptionalAttributes;
+  readonly shouldBeExecuted?: () => SyncOrAsync<boolean>;
+  readonly [MigrationDirection.UP]: MigrationDirectionFunction<Context>;
+  readonly [MigrationDirection.DOWN]: MigrationDirectionFunction<Context>;
 
   constructor(options: MigrationOptions<Context>) {
-    this.metadata = options.metadata;
+    this.shouldBeExecuted = options.shouldBeExecuted;
     this[MigrationDirection.UP] = options[MigrationDirection.UP] || noop;
     this[MigrationDirection.DOWN] = options[MigrationDirection.DOWN] || noop;
+
+    this.metadata = {
+      ...defaultMetadata,
+      ...options.metadata,
+    };
   }
 
   get id(): MigrationIdentifier {
@@ -47,6 +63,7 @@ export class Migration<Context> {
 
   getMetadata(): IMigrationMetadata {
     return {
+      ...defaultMetadata,
       ...this.metadata,
       id: this.id,
     };
@@ -54,3 +71,8 @@ export class Migration<Context> {
 }
 
 function noop() {}
+
+const defaultMetadata = {
+  optional: false,
+  type: MigrationType.Schema,
+};

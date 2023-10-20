@@ -1,16 +1,16 @@
-import { IMigrationsProviderAdapter, Migration } from '@abmf/core';
+import { IMigrationsProvider, Migration } from '@abmt/core';
 
-type MemoryMigrationProviderAdapterOptions<Context> = {
+type InMemoryMigrationsProviderOptions<Context> = {
   migrations: Migration<Context>[];
 };
 
-export class MemoryMigrationProviderAdapter<Context>
-  implements IMigrationsProviderAdapter<Context>
+export class InMemoryMigrationsProvider<Context>
+  implements IMigrationsProvider<Context>
 {
   readonly migrationsPath: string;
   private migrations = new Map<string, Migration<Context>>();
 
-  constructor({ migrations }: MemoryMigrationProviderAdapterOptions<Context>) {
+  constructor({ migrations }: InMemoryMigrationsProviderOptions<Context>) {
     for (const migration of migrations) {
       this.migrations.set(migration.id, migration);
     }

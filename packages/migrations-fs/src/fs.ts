@@ -1,6 +1,6 @@
 import { resolve, basename } from 'node:path';
 import { statSync, readdirSync } from 'node:fs';
-import { Migration } from '@abmf/core';
+import { Migration } from '@abmt/core';
 
 export function resolveMigrationsPath(providedPath: string) {
   // build all possible paths
@@ -12,6 +12,7 @@ export function resolveMigrationsPath(providedPath: string) {
 
   for (const patharr of patharrs) {
     const fPath = resolve(...patharr);
+
     if (isDir(fPath)) return fPath;
   }
 
@@ -30,16 +31,15 @@ export function matchAndGetMigrationsFromMigrationsPath<Context>(
   const migrations: Migration<Context>[] = [];
 
   for (const path of readdirSync(migrationsPath)) {
-    const fileName = basename(path);
+    const fullPath = resolve(migrationsPath, path);
+    const fileName = basename(fullPath);
 
     if (!fileName.match(matchPattern)) continue;
-
     // attempt to extract metadata from the file
     try {
-      const res = require(path);
-
+      const mod = require(fullPath);
       // attempt to load default exported item
-      const exported = res.default || res;
+      const exported = mod.default || mod;
 
       // TODO: check if the filename matches the provided id and name
 
@@ -47,8 +47,9 @@ export function matchAndGetMigrationsFromMigrationsPath<Context>(
       if (exported instanceof Migration) {
         migrations.push(exported);
       }
-    } catch {
+    } catch (err) {
       // noop
+      console.log('unable to require module', err);
     }
   }
 
