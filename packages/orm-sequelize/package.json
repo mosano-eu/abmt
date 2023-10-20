@@ -1,0 +1,41 @@
+{
+  "name": "@abmt/orm-sqlite",
+  "version": "0.0.1",
+  "description": "Allows ABMT to store and execute migrations with SQLite",
+  "repository": "https://github.com/mosano-eu/abmt",
+  "author": "Dev Team <dev@mosano.eu>",
+  "license": "MIT",
+  "private": false,
+  "main": "./dist/cjs/index.min.cjs",
+  "module": "./dist/esm/index.min.mjs",
+  "source": "./src/index.ts",
+  "types": "./dist/cjs/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.min.mjs",
+      "require": "./dist/cjs/index.min.cjs",
+      "types": "./dist/cjs/index.d.ts"
+    }
+  },
+  "scripts": {
+    "dev": "rollup --config --sourcemap --watch",
+    "build": "rollup --config --sourcemap",
+    "lint": "eslint",
+    "test": "jest"
+  },
+  "peerDependencies": {},
+  "dependencies": {
+    "@abmt/core": "0.0.1",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "mariadb": "^3.2.2",
+    "mysql2": "^3.6.2",
+    "oracledb": "^6.2.0",
+    "pg": "^8.11.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.33.0",
+    "sqlite3": "^5.1.6",
+    "tedious": "^16.5.0"
+  }
+}

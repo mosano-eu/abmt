@@ -1,5 +1,5 @@
 import { Connection, Model, Schema } from 'mongoose';
-import { IStoredMigrationReference } from '@abmt/core';
+import { IStoredMigrationReference, MigrationDirection } from '@abmt/core';
 
 export function getMigrationModel(
   connection: Connection,
@@ -12,7 +12,7 @@ export function getMigrationModel(
       created_at: Date,
       last_applied: {
         type: {
-          direction: { type: String },
+          direction: { type: String, enum: Object.values(MigrationDirection) },
           at: Date,
         },
         required: false,
