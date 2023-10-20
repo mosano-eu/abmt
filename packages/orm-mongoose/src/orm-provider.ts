@@ -48,9 +48,6 @@ export class MongooseORM
 
   async getStoredMigrationReferences() {
     const refs: IStoredMigrationReference[] = [];
-    console.log('refs');
-
-    console.log(this.model.collection.conn.readyState);
     const iterator = this.model.find({});
 
     for await (const doc of iterator) {
@@ -64,7 +61,6 @@ export class MongooseORM
         },
       });
     }
-    console.log('refs - end', { refs });
 
     return refs;
   }

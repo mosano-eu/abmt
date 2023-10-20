@@ -6,7 +6,6 @@ import dotenv from 'dotenv';
 
 // Import commands
 import { migrationsCmd } from './commands/migrations';
-import { seedsCmd } from './commands/seeds';
 
 (async function main() {
   dotenv.config({ path: '.env.local' });
@@ -17,8 +16,7 @@ import { seedsCmd } from './commands/seeds';
   program
 
     // add commands
-    .addCommand(migrationsCmd)
-    .addCommand(seedsCmd);
+    .addCommand(migrationsCmd);
 
   await program.parseAsync(process.argv);
 })();

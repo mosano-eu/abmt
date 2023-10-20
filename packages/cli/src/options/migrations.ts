@@ -1,22 +1,21 @@
-import { Command, Option, createOption } from 'commander';
-import flatten from 'lodash/flatten';
-import { MigrationType } from '../typings';
+import { Command, createOption } from 'commander';
 import { FSMigrationsProvider } from '@abmf/migrations-fs';
 
-export function getMigrationsOptions(migrationType: MigrationType): Option[] {
+export function setupCmdToOwnMigrations(cmd: Command) {
+  ///
+  // Handle options
   const migrationsPath = createOption(
     '-p,--migrations-path <migrationsPath>',
     'relative or absolute path to the target migrations directory',
-  ).default(
-    (migrationType === MigrationType.Seeds && './seeds') || './migrations',
-  );
+  ).default('./migrations');
 
   const migrationsPattern = createOption(
     '--migrations-match-pattern <migrationsPattern>',
     'relative or absolute path to the target migrations directory',
   ).default(/\.(js|ts)/);
 
-  return flatten([migrationsPath, migrationsPattern]);
+  cmd.addOption(migrationsPath);
+  cmd.addOption(migrationsPattern);
 }
 
 export function getMigrationsProvider(cmd: Command) {

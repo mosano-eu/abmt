@@ -1,6 +1,7 @@
 import { IMigrationsProvider } from './migrations-provider';
 import { IStorageProvider } from './orm';
 import {
+  IMigrationMetadata,
   Migration,
   MigrationDirection,
   MigrationIdentifier,
@@ -19,7 +20,7 @@ type ExecutionPlan = Array<{
   direction: MigrationDirection;
 }>;
 
-export class Migrator<Context> extends MigratorEvents {
+export class Migrator<Context> extends MigratorEvents<Context> {
   private migrationsProvider: IMigrationsProvider<Context>;
   private storageProvider: IStorageProvider;
   private getContext: MigratorOptions<Context>['getContext'];
@@ -42,33 +43,26 @@ export class Migrator<Context> extends MigratorEvents {
   }
 
   async list() {
-    console.log('aqui 1');
     const migrations = await this.getAllMigrations();
-    console.log('aqui 2');
+
     const migrationsAndStoredReferences =
       await this.getMigrationsStoredReferences(migrations);
-    console.log('aqui 3');
+
     const listOfMigrations: Array<{
-      id: string;
+      metadata: IMigrationMetadata;
       status: 'new' | 'up' | 'down';
       applied_at?: Date;
     }> = [];
 
-    console.log('aqui 4');
-    for (const {
-      migration,
-      storedReference,
-    } of migrationsAndStoredReferences) {
-      console.log('aqui 5 - loop');
+    for (const { metadata, storedReference } of migrationsAndStoredReferences) {
       listOfMigrations.push({
-        id: migration.id,
+        metadata,
         status:
           ((!storedReference || !storedReference.last_applied) && 'new') ||
           storedReference.last_applied.direction,
         applied_at: storedReference?.last_applied?.at,
       });
     }
-    console.log('aqui 6');
 
     return listOfMigrations;
   }
@@ -96,13 +90,26 @@ export class Migrator<Context> extends MigratorEvents {
       const desiredDirection =
         index <= targetIndex ? MigrationDirection.UP : MigrationDirection.DOWN;
 
-      if (storedReference.last_applied?.direction !== desiredDirection) {
-        // add to the plan
-        executionPlan.push({
-          id: migration.id,
-          direction: desiredDirection,
-        });
+      if (storedReference.last_applied?.direction === desiredDirection)
+        continue;
+
+      // before adding it to the plan, check if it has a custom handler that determines
+      // if it should be executed or not.
+      if (migration.shouldBeExecuted) {
+        try {
+          const res = await migration.shouldBeExecuted();
+          if (!res) continue;
+        } catch {
+          // disregard migration on any error
+          continue;
+        }
       }
+
+      // add to the plan
+      executionPlan.push({
+        id: migration.id,
+        direction: desiredDirection,
+      });
     }
 
     return this.execute(executionPlan);
@@ -123,10 +130,8 @@ export class Migrator<Context> extends MigratorEvents {
   private async getMigrationsStoredReferences(
     migrations: Migration<Context>[],
   ) {
-    console.log('before');
     const references =
       await this.storageProvider.getStoredMigrationReferences();
-    console.log('after');
 
     return migrations.map((migration) => {
       // get stored references
@@ -155,6 +160,10 @@ export class Migrator<Context> extends MigratorEvents {
       const metadata = migration.getMetadata();
       let error: Error | undefined = undefined;
 
+      this.emit(EventType.MigrationDirectionGoingToExecute, {
+        migration,
+      });
+
       try {
         await migration[direction](context);
 
@@ -181,6 +190,7 @@ export class Migrator<Context> extends MigratorEvents {
         throw new Error('MigrationError');
       } finally {
         this.emit(EventType.MigrationDirectionExecuted, {
+          migration,
           successful: !error,
           error,
         });

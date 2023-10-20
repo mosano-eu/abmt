@@ -3,3 +3,4 @@ export * from './orm';
 export * from './migration';
 export * from './migrator';
 export * from './migrations-provider';
+export { MigratorEvents } from './events';
