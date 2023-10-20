@@ -5,8 +5,8 @@ import {
   Migration,
   MigrationDirection,
   MigrationOptions,
-  IMigrationsProvider,
-} from '.';
+} from '@abmt/core';
+import { InMemoryMigrationsProvider } from '../src/migrations-provider';
 
 jest.useFakeTimers().setSystemTime(new Date('2020-01-01'));
 
@@ -75,22 +75,11 @@ type TestContext = {
 };
 
 function buildMigrator(migrationsOpts: MigrationOptions<TestContext>[]) {
-  const migrationsMap = new Map(
-    migrationsOpts
-      .map((opts) => new Migration(opts))
-      .map((migration) => [migration.id, migration]),
-  );
+  const migrationsProvider = new InMemoryMigrationsProvider({
+    migrations: migrationsOpts.map((opts) => new Migration(opts)),
+  });
+
   const storedMigrationsMap = new Map<string, IStoredMigrationReference>();
-
-  const migrationsProvider: IMigrationsProvider<TestContext> = {
-    getAllMigrations() {
-      return [...migrationsMap.values()];
-    },
-    getMigration(id) {
-      return migrationsMap.get(id);
-    },
-  };
-
   const storageProvider: IStorageProvider = {
     getStoredMigrationReferences() {
       return [...storedMigrationsMap.values()];

@@ -11,8 +11,11 @@ export function getMigrationModel(
       name: String,
       created_at: Date,
       last_applied: {
-        direction: { type: String },
-        at: Date,
+        type: {
+          direction: { type: String },
+          at: Date,
+        },
+        required: false,
       },
     },
     {

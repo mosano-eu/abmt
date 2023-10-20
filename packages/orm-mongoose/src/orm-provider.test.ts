@@ -76,7 +76,7 @@ describe('MongooseORM', () => {
           expect(migration.down).toBeCalledTimes(0);
         }
 
-        await migrator.goto();
+        await migrator.checkout();
 
         // expect all the up functions should have been called
         /// and expect all the down functions NOT to be called
