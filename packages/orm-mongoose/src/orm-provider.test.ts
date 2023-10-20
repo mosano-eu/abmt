@@ -5,6 +5,7 @@ import {
   MigrationDirection,
   MigrationOptions,
   Migrator,
+  createMockMigrationsProvider,
 } from '@abmt/core';
 import { MongooseORMContext } from './typings';
 import { MongoMemoryServer } from 'mongodb-memory-server';
@@ -123,20 +124,7 @@ async function buildMigrator(
     connection,
   });
 
-  const migrationsMap = new Map(
-    migrationsOpts
-      .map((opts) => new Migration(opts))
-      .map((migration) => [migration.id, migration]),
-  );
-
-  const migrationsProvider: IMigrationsProvider<MongooseORMContext> = {
-    getAllMigrations() {
-      return [...migrationsMap.values()];
-    },
-    getMigration(id) {
-      return migrationsMap.get(id);
-    },
-  };
+  const migrationsProvider = createMockMigrationsProvider(migrationsOpts);
 
   const migrator = new Migrator({
     migrationsProvider,

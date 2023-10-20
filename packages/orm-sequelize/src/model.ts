@@ -47,6 +47,7 @@ export function getMigrationModel(
     {
       id: {
         type: DataTypes.STRING,
+        primaryKey: true,
       },
       name: {
         type: DataTypes.STRING,

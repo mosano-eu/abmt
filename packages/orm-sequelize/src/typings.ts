@@ -1,7 +1,5 @@
-import { Connection } from 'mongoose';
+import { Sequelize } from 'sequelize';
 
-export interface MongooseORMContext {
-  mongoose: {
-    connection: Connection;
-  };
+export interface SequelizeORMContext {
+  sequelize: Sequelize;
 }

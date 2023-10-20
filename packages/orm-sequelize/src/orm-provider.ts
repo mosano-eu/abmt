@@ -3,23 +3,23 @@ import {
   IContextProvider,
   IStoredMigrationReference,
 } from '@abmt/core';
-import { Sequelize, Model } from 'sequelize';
-import { MongooseORMContext } from './typings';
+import { Sequelize } from 'sequelize';
+import { SequelizeORMContext } from './typings';
 import { MigrationModel, getMigrationModel } from './model';
-import cloneDeep from 'lodash/cloneDeep';
+import mem from 'mem';
 
-type MongooseORMOptions = {
+type SequelizeORMOptions = {
   sequelize: Sequelize;
   modelName?: string;
 };
 
-export class MongooseORM
-  implements IStorageProvider, IContextProvider<MongooseORMContext>
+export class SequelizeORM
+  implements IStorageProvider, IContextProvider<SequelizeORMContext>
 {
   private sequelize: Sequelize;
   private model: MigrationModel;
 
-  constructor({ sequelize, modelName }: MongooseORMOptions) {
+  constructor({ sequelize, modelName }: SequelizeORMOptions) {
     this.sequelize = sequelize;
     this.model = getMigrationModel(sequelize, modelName || 'migrations');
   }
@@ -33,31 +33,38 @@ export class MongooseORM
       Pick<IStoredMigrationReference, 'id'> & Partial<IStoredMigrationReference>
     >,
   ): Promise<void> {
-    await this.model.bulkWrite(
+    await this._syncModel();
+
+    await this.model.bulkCreate(
       refs.map((ref) => ({
-        updateOne: {
-          filter: {
-            id: { $eq: ref.id },
-          },
-          update: { $set: cloneDeep(ref) },
-          upsert: true,
-        },
+        id: ref.id,
+        name: ref.name,
+        created_at: ref.created_at,
+        last_applied_at: ref.last_applied?.at,
+        last_applied_direction: ref.last_applied?.direction,
       })),
+      {
+        updateOnDuplicate: ['last_applied_at', 'last_applied_direction'],
+      },
     );
   }
 
   async getStoredMigrationReferences() {
     const refs: IStoredMigrationReference[] = [];
-    const iterator = this.model.find({});
 
-    for await (const doc of iterator) {
+    for await (const doc of await this.model.findAll()) {
+      const lastApplied =
+        (doc.dataValues.last_applied_at &&
+          doc.dataValues.last_applied_direction) ||
+        undefined;
+
       refs.push({
-        id: doc.id,
-        name: doc.name,
-        created_at: doc.created_at,
-        last_applied: doc.last_applied && {
-          at: doc.last_applied.at,
-          direction: doc.last_applied.direction,
+        id: doc.dataValues.id,
+        name: doc.dataValues.name,
+        created_at: doc.dataValues.created_at,
+        last_applied: lastApplied && {
+          at: doc.dataValues.last_applied_at,
+          direction: doc.dataValues.last_applied_direction,
         },
       });
     }
@@ -65,11 +72,19 @@ export class MongooseORM
     return refs;
   }
 
-  async getContext(): Promise<MongooseORMContext> {
+  async getContext(): Promise<SequelizeORMContext> {
     return {
-      mongoose: {
-        connection: await this.connection.asPromise(),
-      },
+      sequelize: this.sequelize,
     };
   }
+
+  ///
+  // Private methods
+  ///
+
+  _syncModel = mem(async () => {
+    await this.model.sync({
+      force: false,
+    });
+  });
 }
