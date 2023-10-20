@@ -1,4 +1,4 @@
-import { IContextProvider, IStorageProvider } from '@abmf/core';
+import { IContextProvider, IStorageProvider } from '@abmt/core';
 import { Command, Option, createOption } from 'commander';
 import { EventEmitter } from 'node:events';
 import { notifyOnTerminal } from '../utils/cli';
@@ -20,7 +20,7 @@ export function setupCmdToOwnORM(cmd: Command) {
 
     // PlatformKey.Mongoose
     createOption('--mongoose-uri <mongooseUri>')
-      .default('mongodb://127.0.0.1:27017/abmf')
+      .default('mongodb://127.0.0.1:27017/abmt')
       .implies({ orm: 'mongoose' })
       .env('MONGOOSE_URI'),
 
@@ -28,7 +28,7 @@ export function setupCmdToOwnORM(cmd: Command) {
       '--mongoose-migrations-collection <mongooseMigrationsCollection>',
     )
       .implies({ orm: 'mongoose' })
-      .default('abmf_migrations')
+      .default('abmt_migrations')
       .env('MONGOOSE_MIGRATIONS_COLLECTION'),
   ];
 
@@ -52,7 +52,7 @@ export async function getORMProviders<Context>(cmd: Command): Promise<{
 
   switch (options.orm) {
     case PlatformKey.Mongoose: {
-      const { MongooseORM } = require('@abmf/orm-mongoose');
+      const { MongooseORM } = require('@abmt/orm-mongoose');
       const { createConnection } = require('mongoose');
 
       const connection = createConnection(options.mongooseUri);

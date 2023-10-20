@@ -1,4 +1,4 @@
-import { IMigrationsProvider, Migration } from '@abmf/core';
+import { IMigrationsProvider, Migration } from '@abmt/core';
 import {
   matchAndGetMigrationsFromMigrationsPath,
   resolveMigrationsPath,

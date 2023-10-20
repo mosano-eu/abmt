@@ -11,7 +11,7 @@ export default [
     input,
     output: [
       {
-        file: pkg.bin.abmf,
+        file: pkg.bin.abmt,
         format: 'cjs',
       },
     ],

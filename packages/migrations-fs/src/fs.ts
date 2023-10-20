@@ -1,6 +1,6 @@
 import { resolve, basename } from 'node:path';
 import { statSync, readdirSync } from 'node:fs';
-import { Migration } from '@abmf/core';
+import { Migration } from '@abmt/core';
 
 export function resolveMigrationsPath(providedPath: string) {
   // build all possible paths

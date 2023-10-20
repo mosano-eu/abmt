@@ -5,7 +5,7 @@ import {
   MigrationDirection,
   MigrationOptions,
   Migrator,
-} from '@abmf/core';
+} from '@abmt/core';
 import { MongooseORMContext } from './typings';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import { MongooseORM } from './orm-provider';

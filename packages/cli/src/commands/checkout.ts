@@ -2,7 +2,7 @@ import { createCommand } from 'commander';
 import { buildMigrator } from '../utils/migrator';
 import { captureErrors } from '../utils/error-handler';
 import chalk from 'chalk';
-import { EventType } from '@abmf/core';
+import { EventType } from '@abmt/core';
 import { error, log } from '../utils/cli';
 
 export const checkoutCmd = createCommand('checkout')

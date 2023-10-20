@@ -1,13 +1,13 @@
 {
-  "name": "@abmf/cli",
+  "name": "@abmt/cli",
   "version": "0.0.1",
-  "description": "ABMF CLI - allows developers to use ABMF as a standalone framework",
-  "repository": "https://github.com/mosano-eu/abmf",
+  "description": "ABMT CLI - allows developers to use ABMT as a standalone framework",
+  "repository": "https://github.com/mosano-eu/abmt",
   "author": "Dev Team <dev@mosano.eu>",
   "license": "MIT",
   "private": true,
   "bin": {
-    "abmf": "./dist/cjs/cli.min.js"
+    "abmt": "./dist/cjs/cli.min.js"
   },
   "scripts": {
     "dev": "rollup --config --sourcemap --watch",
@@ -16,12 +16,12 @@
     "test": "jest"
   },
   "peerDependencies": {
-    "@abmf/core": "0.0.1",
-    "@abmf/orm-mongoose": "0.0.1",
+    "@abmt/core": "0.0.1",
+    "@abmt/orm-mongoose": "0.0.1",
     "mongoose": "^7.6.3"
   },
   "peerDependenciesMeta": {
-    "@abmf/orm-mongoose": {
+    "@abmt/orm-mongoose": {
       "optional": true
     },
     "mongoose": {
@@ -29,7 +29,7 @@
     }
   },
   "dependencies": {
-    "@abmf/migrations-fs": "0.0.1",
+    "@abmt/migrations-fs": "0.0.1",
     "@swc/register": "^0.1.10",
     "chalk": "4",
     "cli-table": "^0.3.11",

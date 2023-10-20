@@ -2,7 +2,7 @@ import {
   IStorageProvider,
   IContextProvider,
   IStoredMigrationReference,
-} from '@abmf/core';
+} from '@abmt/core';
 import { Connection, Model } from 'mongoose';
 import { MongooseORMContext } from './typings';
 import { getMigrationModel } from './model';

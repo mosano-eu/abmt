@@ -1,5 +1,5 @@
-import { Migration, MigrationType } from '@abmf/core';
-import { MongooseORMContext } from '@abmf/orm-mongoose';
+import { Migration, MigrationType } from '@abmt/core';
+import { MongooseORMContext } from '@abmt/orm-mongoose';
 
 export default new Migration<MongooseORMContext>({
   metadata: {

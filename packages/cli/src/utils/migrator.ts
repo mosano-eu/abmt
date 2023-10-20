@@ -1,6 +1,6 @@
 import { Command } from 'commander';
 import { getORMProviders } from '../options/orm';
-import { Migrator } from '@abmf/core';
+import { Migrator } from '@abmt/core';
 import { getMigrationsProvider } from '../options/migrations';
 
 export async function buildMigrator(cmd: Command) {

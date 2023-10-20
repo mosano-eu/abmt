@@ -13,7 +13,7 @@ import { checkoutCmd } from './commands/checkout';
 (async function main() {
   dotenv.config({ path: '.env.local' });
 
-  const program = new Command('abmf')
+  const program = new Command('abmt')
     .version('PKG_VERSION')
     .addCommand(listCmd)
     .addCommand(checkoutCmd);

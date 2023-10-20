@@ -1,4 +1,4 @@
-# A Better Migration Tool (a.k.a. ABMF)
+# A Better Migration Tool (a.k.a. ABMT)
 
 framework-agnostic migration to handle database maintainability needs, such as executing schema migrations, data seeding, and other type of time-based versioning operations.
 
@@ -6,7 +6,7 @@ framework-agnostic migration to handle database maintainability needs, such as e
 
 ## Table of Contents
 
-- [A Better Migration Tool (a.k.a. ABMF)](#a-better-migration-tool-aka-abmf)
+- [A Better Migration Tool (a.k.a. ABMT)](#a-better-migration-tool-aka-abmt)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
   - [Installation](#installation)
@@ -40,8 +40,8 @@ framework-agnostic migration to handle database maintainability needs, such as e
 ```bash
 cd ./path/to/your/project;
 
-yarn add @abmf/cli @abmf/orm-mongoose;
-yarn exec abmf --help;
+yarn add @abmt/cli @abmt/orm-mongoose;
+yarn exec abmt --help;
 ```
 
 ### Programmatic
@@ -49,13 +49,13 @@ yarn exec abmf --help;
 ```bash
 cd ./path/to/your/project;
 
-yarn add @abmf/core @abmf/orm-mongoose @abmf/migrations-in-memory;
+yarn add @abmt/core @abmt/orm-mongoose @abmt/migrations-in-memory;
 ```
 
 ```typescript
 // src/migrator.ts
-import { Migrator } from '@abmf/core'
-import { MongooseORM } from '@abmf/orm-mongoose'
+import { Migrator } from '@abmt/core'
+import { MongooseORM } from '@abmt/orm-mongoose'
 
 ///
 // ORM - Storage and Context provider
@@ -72,7 +72,7 @@ const orm = new MongooseORM({ connection })
 import * as migrations from './migrations'
 const migrationsProvider = new InMemoryMigrationsProvider({ migrations })
 // or
-// import { FSMigrationsProvider } from '@abmf/migrations-fs'
+// import { FSMigrationsProvider } from '@abmt/migrations-fs'
 // const migrationsProvider = new FSMigrationsProvider({ migrationsPath: `./migrations` })
 
 const migrator = new Migrator({
@@ -89,23 +89,23 @@ export async function applyAll() {
 
 ## Architecture
 
-ABMF is designed to support multiple ORMs that could be added in the future. The core can be injected with the following dependencies: migrations provider, storage provider and context provider.
+ABMT is designed to support multiple ORMs that could be added in the future. The core can be injected with the following dependencies: migrations provider, storage provider and context provider.
 
 - Migrations Provider - this is responsible, as the name states, for providing migrations. This repository already contains a migrations provider for the File System (getting migrations from a folder) and in Memory (specially relevant if you wish to run your migrations within a test-suite for example). Other providers might arise later such as reading from an S3 bucket or an FTP server.
-- Storage Provider - this is responsible for storing and retrieve the state of your project's environment executed migrations. On projects with a single datastore, the migrations state is saved within the same datastore, although, for distributed systems you might need to move data in between datastores, and the migrations storage might need to be place on a different datastore than the ones used by the service(s). ABMF allows you to define which datastore you want to use, as long as it supports it.
+- Storage Provider - this is responsible for storing and retrieve the state of your project's environment executed migrations. On projects with a single datastore, the migrations state is saved within the same datastore, although, for distributed systems you might need to move data in between datastores, and the migrations storage might need to be place on a different datastore than the ones used by the service(s). ABMT allows you to define which datastore you want to use, as long as it supports it.
 - Context Provider - this is responsible for determining the context which the migrations execute. This is highly relevant for decreasing the amount of imports each migration has, as for example, providing a connection to the datastore/orm being used. The context is highly customizable and separated from the Storage Provider so it could be composed to cover for the use cases commonly found on distributed projects.
 
-If your project requires something unusual, you can extend ABMF to support it. If you decide to add a new piece heck the [Contributing](#contributing) so you can help ABMF frow.
+If your project requires something unusual, you can extend ABMT to support it. If you decide to add a new piece heck the [Contributing](#contributing) so you can help ABMT frow.
 
 ## Packages
 
 | Package Name        | Category           | Description                                                                           | Stability  |
 |---------------------|--------------------|---------------------------------------------------------------------------------------|---|
-| [@abmf/core](./packages/core/)          | Core               | Provides the core functionality and interfaces for other packages to implement/extend | Alpha  |
-| [@abmf/cli](./packages/cli/)  | CLI                | Provides a CLI for integrating ABMF in a project without requiring changes to the code-base       | Alpha  |
-| [@abmf/orm-mongoose](./packages/orm-mongoose/)  | ORM                | Provides a Storage Provider and a Context Provider tied with Mongoose / MongoDB       | Alpha  |
-| [@abmf/migrations-fs](./packages/migrations-fs) | Migration Provider | Provides a Migration Provider that reads migrations from the FS                       | Alpha  |
-| [@abmf/migrations-in-memory](./packages/migrations-in-memory/) | Migration Provider | Provides a Migration Provider that takes Migrations directly from its constructor, allowing the injection of Migrations In-Memory. Ideal for programmatic approaches that already include a bundler for migrations                       | Alpha  |
+| [@abmt/core](./packages/core/)          | Core               | Provides the core functionality and interfaces for other packages to implement/extend | Alpha  |
+| [@abmt/cli](./packages/cli/)  | CLI                | Provides a CLI for integrating ABMT in a project without requiring changes to the code-base       | Alpha  |
+| [@abmt/orm-mongoose](./packages/orm-mongoose/)  | ORM                | Provides a Storage Provider and a Context Provider tied with Mongoose / MongoDB       | Alpha  |
+| [@abmt/migrations-fs](./packages/migrations-fs) | Migration Provider | Provides a Migration Provider that reads migrations from the FS                       | Alpha  |
+| [@abmt/migrations-in-memory](./packages/migrations-in-memory/) | Migration Provider | Provides a Migration Provider that takes Migrations directly from its constructor, allowing the injection of Migrations In-Memory. Ideal for programmatic approaches that already include a bundler for migrations                       | Alpha  |
 
 ## Usage
 

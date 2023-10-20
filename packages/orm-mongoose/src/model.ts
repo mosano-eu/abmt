@@ -1,5 +1,5 @@
 import { Connection, Model, Schema } from 'mongoose';
-import { IStoredMigrationReference } from '@abmf/core';
+import { IStoredMigrationReference } from '@abmt/core';
 
 export function getMigrationModel(
   connection: Connection,

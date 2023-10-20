@@ -1,5 +1,5 @@
 import { Command, createOption } from 'commander';
-import { FSMigrationsProvider } from '@abmf/migrations-fs';
+import { FSMigrationsProvider } from '@abmt/migrations-fs';
 
 export function setupCmdToOwnMigrations(cmd: Command) {
   ///

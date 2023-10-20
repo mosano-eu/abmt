@@ -1,8 +1,8 @@
 {
-  "name": "@abmf/orm-mongoose",
+  "name": "@abmt/orm-mongoose",
   "version": "0.0.1",
-  "description": "Allows ABMF to store and execute migrations with Mongoose",
-  "repository": "https://github.com/mosano-eu/abmf",
+  "description": "Allows ABMT to store and execute migrations with Mongoose",
+  "repository": "https://github.com/mosano-eu/abmt",
   "author": "Dev Team <dev@mosano.eu>",
   "license": "MIT",
   "private": false,
@@ -27,7 +27,7 @@
     "mongoose": "^7.6.3"
   },
   "dependencies": {
-    "@abmf/core": "0.0.1",
+    "@abmt/core": "0.0.1",
     "lodash": "^4.17.21",
     "mongodb-memory-server": "^9.0.1",
     "mongoose": "^7.6.3"
