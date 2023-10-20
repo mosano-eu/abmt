@@ -29,6 +29,7 @@ framework-agnostic migration to handle database maintainability needs, such as e
   - Mongoose: MongoDB / DynamoDB
   - Sequelize: SQLite / Postgres / Mysql / Mariadb / MSsql / Oracle SQL
 - ✅ Written in Typescript
+- ✅ Test Suite to assert all supported functionalities
 - ✅ Supports multiple storages for the migration data
 - ✅ Supports multiple migration providers
 - ✅ Supports custom contexts, so migrations can occur across multiple datastores
