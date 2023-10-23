@@ -9,6 +9,7 @@ import { listCmd } from './commands/list';
 import { setupCmdToOwnORM } from './options/orm';
 import { setupCmdToOwnMigrations } from './options/migrations';
 import { checkoutCmd } from './commands/checkout';
+import { createCmd } from './commands/create';
 
 (async function main() {
   dotenv.config({ path: '.env.local' });
@@ -16,6 +17,7 @@ import { checkoutCmd } from './commands/checkout';
   const program = new Command('abmt')
     .version('PKG_VERSION')
     .addCommand(listCmd)
+    .addCommand(createCmd)
     .addCommand(checkoutCmd);
 
   setupCmdToOwnORM(program);

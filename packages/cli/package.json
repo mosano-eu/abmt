@@ -36,6 +36,7 @@
     "@swc/register": "^0.1.10",
     "chalk": "4",
     "cli-table": "^0.3.11",
-    "commander": "^11.1.0"
+    "commander": "^11.1.0",
+    "lodash": "^4.17.21"
   }
 }

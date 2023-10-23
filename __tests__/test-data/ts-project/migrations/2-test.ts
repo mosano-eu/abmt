@@ -1,10 +1,10 @@
-const core = require('@abmt/core');
+import { Migration, MigrationType } from '@abmt/core';
 
-module.exports = new core.Migration({
+module.exports = new Migration({
   metadata: {
     created_at: new Date(2),
     name: 'test-2',
-    type: core.MigrationType.Seed,
+    type: MigrationType.Seed,
   },
 
   up() {
