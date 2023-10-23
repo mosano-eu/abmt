@@ -22,8 +22,28 @@ jobs:
         id: extract_version
         uses: Saionaro/extract-package-version@v1.2.1
 
-      - name: Setup
-        uses: ./.github/actions/setup.yml
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/Htdrogen'
+          registry-url: https://npm.pkg.github.com/
+          scope: '@abmf'
+
+      - name: Cache dependencies
+        id: yarn-cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install dependencies
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: |
+          yarn install --frozen-lockfile
+        shell: bash
 
       - name: Print version
         run: echo ${{ steps.extract_version.outputs.version }}
