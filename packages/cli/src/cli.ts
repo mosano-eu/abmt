@@ -1,4 +1,4 @@
-#!/usr/bin/env node --loader tsx
+#!/usr/bin/env node --experimental-loader tsx
 
 import { Command } from 'commander';
 import dotenv from 'dotenv';
