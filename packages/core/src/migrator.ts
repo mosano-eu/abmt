@@ -123,7 +123,10 @@ export class Migrator<Context> extends MigratorEvents<Context> {
     const migrations = await this.migrationsProvider.getAllMigrations();
 
     return [...migrations].sort((a, b) =>
-      a.getMetadata().created_at > b.getMetadata().created_at ? 1 : 0,
+      a.getMetadata().created_at.getTime() >
+      b.getMetadata().created_at.getTime()
+        ? 0
+        : -1,
     );
   }
 
