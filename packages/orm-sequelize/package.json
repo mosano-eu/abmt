@@ -22,9 +22,8 @@
     "lint": "eslint",
     "test": "jest"
   },
-  "peerDependencies": {},
   "dependencies": {
-    "@abmt/core": "0.0.1",
+    "@abmt/core": "^0.0.1",
     "lodash": "^4.17.21",
     "mem": "6"
   },

@@ -26,6 +26,6 @@
     "@abmt/core": "0.0.1"
   },
   "devDependencies": {
-    "@abmt/core": "0.0.1"
+    "@abmt/core": "^0.0.1"
   }
 }

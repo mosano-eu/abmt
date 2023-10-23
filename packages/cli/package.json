@@ -28,7 +28,7 @@
     }
   },
   "dependencies": {
-    "@abmt/migrations-fs": "0.0.1",
+    "@abmt/migrations-fs": "^0.0.1",
     "@swc/register": "^0.1.10",
     "chalk": "4",
     "cli-table": "^0.3.11",
