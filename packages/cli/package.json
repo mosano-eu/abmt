@@ -1,6 +1,6 @@
 {
   "name": "@abmt/cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "ABMT CLI - allows developers to use ABMT as a standalone framework",
   "repository": {
     "type": "git",
@@ -40,7 +40,7 @@
     }
   },
   "dependencies": {
-    "@abmt/migrations-fs": "^0.0.1",
+    "@abmt/migrations-fs": "^0.0.2",
     "chalk": "4",
     "cli-table": "^0.3.11",
     "commander": "^11.1.0",
