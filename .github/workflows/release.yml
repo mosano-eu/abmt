@@ -1,50 +1,43 @@
-name: Publish to npm on new tag
+# name: Publish to npm on new tag
 
-on:
-  # push:
-  #   tags:
-  #     - '*'
-  push:
-    branches:
-      - "main"
-  pull_request:
-    branches:
-      - main
+# on:
+#   push:
+#     tags:
+#       - '*'
+# jobs:
+#   publish:
+#     runs-on: self-hosted
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
 
-jobs:
-  publish:
-    runs-on: self-hosted
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#       - name: Extract version
+#         id: extract_version
+#         uses: Saionaro/extract-package-version@v1.2.1
 
-      - name: Extract version
-        id: extract_version
-        uses: Saionaro/extract-package-version@v1.2.1
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: 18
+#           check-latest: true
+#           cache: yarn
+#           scope: '@abmf'
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          check-latest: true
-          cache: yarn
-          scope: '@abmf'
+#       - name: Install dependencies
+#         if: steps.yarn-cache.outputs.cache-hit != 'true'
+#         run: |
+#           yarn install --frozen-lockfile
+#         shell: bash
 
-      - name: Install dependencies
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
-        run: |
-          yarn install --frozen-lockfile
-        shell: bash
+#       - name: Print version
+#         run: echo ${{ steps.extract_version.outputs.version }}
 
-      - name: Print version
-        run: echo ${{ steps.extract_version.outputs.version }}
+#       - name: Build
+#         run: yarn build
 
-      - name: Build
-        run: yarn build
-
-      - name: Publish to npm
-        run: |
-          echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> .npmrc
-          yarn exec lerna publish --force-publish --access public
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+#       - name: Publish to npm
+#         run: |
+#           echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> .npmrc
+#           yarn exec lerna publish --force-publish --access public
+#         env:
+#           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
