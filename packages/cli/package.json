@@ -5,7 +5,6 @@
   "repository": "https://github.com/mosano-eu/abmt",
   "author": "Mosano Dev Team <dev@mosano.eu>",
   "license": "MIT",
-  "private": true,
   "bin": {
     "abmt": "./dist/cjs/cli.min.js"
   },

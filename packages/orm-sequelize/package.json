@@ -5,7 +5,6 @@
   "repository": "https://github.com/mosano-eu/abmt",
   "author": "Mosano Dev Team <dev@mosano.eu>",
   "license": "MIT",
-  "private": false,
   "main": "./dist/cjs/index.min.cjs",
   "module": "./dist/esm/index.min.mjs",
   "source": "./src/index.ts",
