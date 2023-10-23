@@ -10,7 +10,7 @@ export async function runCliCommand(cmdAndArgs: string) {
     '../../', // monorepo root
     '__tests__/test-data/ts-project/migrations',
   );
-  const abmtCommand = `"${distBinPath}" --migrations-path="${migrationsPath}" --orm sequelize --sequelize-uri="sqlite::memory:"`;
+  const abmtCommand = `node --loader tsx "${distBinPath}" --migrations-path="${migrationsPath}" --orm sequelize --sequelize-uri="sqlite::memory:"`;
 
   const command = cmdAndArgs.replace('abmt', abmtCommand);
   return await new Promise<{
