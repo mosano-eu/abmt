@@ -13,6 +13,8 @@ export async function buildMigrator(cmd: Command) {
     getContext: () => contextProvider.getContext(),
   });
 
+  await migrator.list();
+
   return {
     migrator,
     migrationsProvider,
