@@ -9,14 +9,15 @@ framework-agnostic migration to handle database maintainability needs, such as e
 - [A Better Migration Tool (a.k.a. ABMT)](#a-better-migration-tool-aka-abmt)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
+  - [Motivation](#motivation)
   - [Installation](#installation)
     - [CLI](#cli)
     - [Programmatic](#programmatic)
   - [Architecture](#architecture)
   - [Packages](#packages)
   - [Usage](#usage)
-    - [CLI](#cli-1)
-    - [Programmatic](#programmatic-1)
+    - [CLI usage](#cli-usage)
+    - [Programmatic usage](#programmatic-usage)
   - [Contributing](#contributing)
   - [Alternatives](#alternatives)
   - [License](#license)
@@ -34,6 +35,14 @@ framework-agnostic migration to handle database maintainability needs, such as e
 - ✅ Supports multiple migration providers
 - ✅ Supports custom contexts, so migrations can occur across multiple datastores
 - 🧐 [Usage examples](./packages/cli/examples/)
+
+## Motivation
+
+As part of our job at [MOSANO.eu](https://mosano.eu), we've used a lot of different systems to manage database schema versioning/migrations, although, we have had too many issues handling data-migrations with MongoDB/Mongoose, one migration tool didn't support typescript (we had to first compile, point to dists files and then run migrations), and others were not capable of become embeddable due to the fact they integrated @swc/register within it, which would mess with other transpilers that we could be using.
+
+So we decided to dedicate a bit of our time to build something that could be reused across projects, and that could possibly support multiple databases by separating the concerns in this particular task.
+
+We're hoping it could help other projects within the community somehow, and we'll gladly accept your contributions if you want to help.
 
 ## Installation
 
@@ -112,11 +121,17 @@ If your project requires something unusual, you can extend ABMT to support it. I
 
 ## Usage
 
-### CLI
+### CLI usage
 
-### Programmatic
+> TBD: help us and suggest a contribution for this section
+
+### Programmatic usage
+
+> TBD: help us and suggest a contribution for this section
 
 ## Contributing
+
+> TBD: help us and suggest a contribution for this section
 
 ## Alternatives
 
