@@ -2,7 +2,10 @@
   "name": "@abmt/migrations-in-memory",
   "version": "0.0.1",
   "description": "Provides ABMT the ability to capture migrations programatically",
-  "repository": "https://github.com/mosano-eu/abmt",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mosano-eu/abmt.git"
+  },
   "author": "Mosano Dev Team <dev@mosano.eu>",
   "license": "MIT",
   "main": "./dist/cjs/index.cjs",

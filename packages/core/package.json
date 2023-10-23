@@ -2,7 +2,10 @@
   "name": "@abmt/core",
   "version": "0.0.1",
   "description": "ABMT core includes all the core functionality and typescript interfaces for extending it",
-  "repository": "https://github.com/mosano-eu/abmt",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mosano-eu/abmt.git"
+  },
   "author": "Mosano Dev Team <dev@mosano.eu>",
   "license": "MIT",
   "main": "./dist/cjs/index.cjs",
