@@ -5,33 +5,22 @@ import {
   Migrator,
   createMockMigrationsProvider,
 } from '@abmt/core';
-import { MongooseORMContext } from './typings';
-import { MongoMemoryServer } from 'mongodb-memory-server';
-import { MongooseORM } from './orm-provider';
-import { createConnection } from 'mongoose';
-import { randomUUID } from 'crypto';
+import { SequelizeORMContext } from './typings';
+import { SequelizeORM } from './orm-provider';
+import { Sequelize } from 'sequelize';
 
 jest
   .useFakeTimers({ doNotFake: ['nextTick'] })
   .setSystemTime(new Date('2020-01-01'));
 
-// MongoDB Memory-based server to run tests against
-const mongoDBMemory = new MongoMemoryServer({
-  instance: {
-    dbName: randomUUID(),
-  },
-});
-beforeAll(async () => mongoDBMemory.start());
-afterAll(async () => mongoDBMemory.stop());
-
-describe('MongooseORM', () => {
+describe('SequelizeORM', () => {
   describe('ContextProvider', () => {
     it.todo('should provide an open connection as context');
   });
 
   describe('StorageProvider', () => {
     it('should update and sync migrations', async () => {
-      const { migrator, ormProvider, migrationsProvider, connection } =
+      const { migrator, ormProvider, migrationsProvider, sequelize } =
         await buildMigrator([
           {
             metadata: { name: 'first', created_at: new Date(1) },
@@ -108,20 +97,18 @@ describe('MongooseORM', () => {
           },
         ] as IStoredMigrationReference[]);
       } finally {
-        await connection.destroy();
+        await sequelize.close();
       }
     });
   });
 });
 
 async function buildMigrator(
-  migrationsOpts: MigrationOptions<MongooseORMContext>[],
+  migrationsOpts: MigrationOptions<SequelizeORMContext>[],
 ) {
-  const connection = createConnection(mongoDBMemory.getUri());
-  const ormProvider = new MongooseORM({
-    connection,
-  });
+  const sequelize = new Sequelize('sqlite::memory:');
 
+  const ormProvider = new SequelizeORM({ sequelize });
   const migrationsProvider = createMockMigrationsProvider(migrationsOpts);
 
   const migrator = new Migrator({
@@ -130,8 +117,10 @@ async function buildMigrator(
     getContext: () => ormProvider.getContext(),
   });
 
+  await sequelize.sync();
+
   return {
-    connection,
+    sequelize,
     migrator,
     migrationsProvider,
     ormProvider,

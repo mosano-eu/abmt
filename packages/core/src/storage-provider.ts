@@ -17,7 +17,3 @@ export interface IStorageProvider {
   ): SyncOrAsync<void>;
   getStoredMigrationReferences(): SyncOrAsync<IStoredMigrationReference[]>;
 }
-
-export interface IContextProvider<Context> {
-  getContext(): SyncOrAsync<Context>;
-}

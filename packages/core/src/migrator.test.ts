@@ -1,16 +1,12 @@
-import {
-  IMigrationsProvider,
-  IStorageProvider,
-  IStoredMigrationReference,
-} from '.';
-import { Migration, MigrationDirection, MigrationOptions } from './migration';
-import { Migrator } from './migrator';
+import { IStoredMigrationReference } from './storage-provider';
+import { buildMockedSetup } from './mock';
+import { MigrationDirection } from './migration';
 
 jest.useFakeTimers().setSystemTime(new Date('2020-01-01'));
 
 describe('Migrator', () => {
-  it('should execute all the migrations and mark as executed', async () => {
-    const { migrator, storageProvider, migrationsProvider } = buildMigrator([
+  const setup = buildMockedSetup<{ foo: 'bar' }>(
+    [
       {
         metadata: {
           name: 'first',
@@ -24,7 +20,12 @@ describe('Migrator', () => {
         up: jest.fn(),
         down: jest.fn(),
       },
-    ]);
+    ],
+    () => ({ foo: 'bar' }),
+  );
+
+  it('should execute all the migrations and mark as executed', async () => {
+    const { migrator, storageProvider, migrationsProvider } = setup;
 
     expect(await storageProvider.getStoredMigrationReferences()).toStrictEqual(
       [],
@@ -67,51 +68,3 @@ describe('Migrator', () => {
     ] as IStoredMigrationReference[]);
   });
 });
-
-type TestContext = {
-  foo: string;
-};
-
-function buildMigrator(migrationsOpts: MigrationOptions<TestContext>[]) {
-  const migrationsMap = new Map(
-    migrationsOpts
-      .map((opts) => new Migration(opts))
-      .map((migration) => [migration.id, migration]),
-  );
-  const storedMigrationsMap = new Map<string, IStoredMigrationReference>();
-
-  const migrationsProvider: IMigrationsProvider<TestContext> = {
-    getAllMigrations() {
-      return [...migrationsMap.values()];
-    },
-    getMigration(id) {
-      return migrationsMap.get(id);
-    },
-  };
-
-  const storageProvider: IStorageProvider = {
-    getStoredMigrationReferences() {
-      return [...storedMigrationsMap.values()];
-    },
-    upsertReferences(refs) {
-      for (const ref of refs) {
-        storedMigrationsMap.set(ref.id, {
-          ...storedMigrationsMap.get(ref.id),
-          ...ref,
-        });
-      }
-    },
-  };
-
-  const migrator = new Migrator({
-    migrationsProvider,
-    storageProvider,
-    getContext: () => ({ foo: 'bar' }),
-  });
-
-  return {
-    migrator,
-    migrationsProvider,
-    storageProvider,
-  };
-}

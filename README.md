@@ -26,8 +26,10 @@ framework-agnostic migration to handle database maintainability needs, such as e
 - 💻 Bult-in CLI to execute migrations
 - 👨‍💻 Programmatic API to execute migrations
 - 🗄 Database-agnostic. Supports multiple ORMs / Datastores:
-  - Mongoose / MongoDB
+  - Mongoose: MongoDB / DynamoDB
+  - Sequelize: SQLite / Postgres / Mysql / Mariadb / MSsql / Oracle SQL
 - ✅ Written in Typescript
+- ✅ Test Suite to assert all supported functionalities
 - ✅ Supports multiple storages for the migration data
 - ✅ Supports multiple migration providers
 - ✅ Supports custom contexts, so migrations can occur across multiple datastores
@@ -103,7 +105,8 @@ If your project requires something unusual, you can extend ABMT to support it. I
 |---------------------|--------------------|---------------------------------------------------------------------------------------|---|
 | [@abmt/core](./packages/core/)          | Core               | Provides the core functionality and interfaces for other packages to implement/extend | Alpha  |
 | [@abmt/cli](./packages/cli/)  | CLI                | Provides a CLI for integrating ABMT in a project without requiring changes to the code-base       | Alpha  |
-| [@abmt/orm-mongoose](./packages/orm-mongoose/)  | ORM                | Provides a Storage Provider and a Context Provider tied with Mongoose / MongoDB       | Alpha  |
+| [@abmt/orm-mongoose](./packages/orm-mongoose/)  | ORM                | Provides a Storage Provider and a Context Provider tied with Mongoose / NoSQL MongoDB-based dialects      | Alpha  |
+| [@abmt/orm-sequelize](./packages/orm-sequelize/)  | ORM                | Provides a Storage Provider and a Context Provider tied with Sequelize / SQL dialects       | Alpha  |
 | [@abmt/migrations-fs](./packages/migrations-fs) | Migration Provider | Provides a Migration Provider that reads migrations from the FS                       | Alpha  |
 | [@abmt/migrations-in-memory](./packages/migrations-in-memory/) | Migration Provider | Provides a Migration Provider that takes Migrations directly from its constructor, allowing the injection of Migrations In-Memory. Ideal for programmatic approaches that already include a bundler for migrations                       | Alpha  |
 

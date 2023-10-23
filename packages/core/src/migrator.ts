@@ -1,5 +1,5 @@
 import { IMigrationsProvider } from './migrations-provider';
-import { IStorageProvider } from './orm';
+import { IStorageProvider } from './storage-provider';
 import {
   IMigrationMetadata,
   Migration,
@@ -145,7 +145,10 @@ export class Migrator<Context> extends MigratorEvents<Context> {
   private async syncWithStorage(migrations: Migration<Context>[]) {
     // upsert all the local references on orm migrations ref storage
     await this.storageProvider.upsertReferences(
-      migrations.map((migration) => migration.getMetadata()),
+      migrations.map((migration) => {
+        const { id, name, created_at } = migration.getMetadata();
+        return { id, name, created_at };
+      }),
     );
   }
 
