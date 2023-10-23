@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Allows ABMT to store and execute migrations with SQLite",
   "repository": "https://github.com/mosano-eu/abmt",
-  "author": "Dev Team <dev@mosano.eu>",
+  "author": "Mosano Dev Team <dev@mosano.eu>",
   "license": "MIT",
   "private": false,
   "main": "./dist/cjs/index.min.cjs",

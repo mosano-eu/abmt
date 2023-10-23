@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "ABMT CLI - allows developers to use ABMT as a standalone framework",
   "repository": "https://github.com/mosano-eu/abmt",
-  "author": "Dev Team <dev@mosano.eu>",
+  "author": "Mosano Dev Team <dev@mosano.eu>",
   "license": "MIT",
   "private": true,
   "bin": {

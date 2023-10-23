@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Provides ABMT the ability to capture migrations programatically",
   "repository": "https://github.com/mosano-eu/abmt",
-  "author": "Dev Team <dev@mosano.eu>",
+  "author": "Mosano Dev Team <dev@mosano.eu>",
   "license": "MIT",
   "private": false,
   "main": "./dist/cjs/index.cjs",

@@ -5,7 +5,7 @@
   "version": "0.0.1",
   "description": "A Better Migration Tool",
   "repository": "https://github.com/mosano/abmt",
-  "author": "Mosano <dev@mosano.eu>",
+  "author": "Mosano Dev Team <dev@mosano.eu>",
   "workspaces": {
     "packages": [
       "packages/*"
