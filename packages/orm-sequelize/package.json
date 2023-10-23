@@ -6,6 +6,7 @@
     "type": "git",
     "url": "git+https://github.com/mosano-eu/abmt.git"
   },
+  "private": false,
   "author": "Mosano Dev Team <dev@mosano.eu>",
   "license": "MIT",
   "main": "./dist/cjs/index.min.cjs",
