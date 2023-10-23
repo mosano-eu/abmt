@@ -1,5 +1,5 @@
 {
-  "name": "@abmt/orm-sqlite",
+  "name": "@abmt/orm-sequelize",
   "version": "0.0.1",
   "description": "Allows ABMT to store and execute migrations with SQLite",
   "repository": {

@@ -10,7 +10,7 @@
   "author": "Mosano Dev Team <dev@mosano.eu>",
   "license": "MIT",
   "bin": {
-    "abmt": "dist/cjs/cli.min.js"
+    "abmt": "dist/cli.js"
   },
   "scripts": {
     "dev": "rollup --config --sourcemap --watch",
@@ -21,9 +21,17 @@
   "peerDependencies": {
     "@abmt/core": "0.0.1",
     "@abmt/orm-mongoose": "0.0.1",
-    "mongoose": "^7.6.3"
+    "@abmt/orm-sequelize": "0.0.1",
+    "mongoose": "^7.6.3",
+    "sequelize": "^6.33.0"
   },
   "peerDependenciesMeta": {
+    "@abmt/orm-sequelize": {
+      "optional": true
+    },
+    "sequelize": {
+      "optional": true
+    },
     "@abmt/orm-mongoose": {
       "optional": true
     },
@@ -33,10 +41,10 @@
   },
   "dependencies": {
     "@abmt/migrations-fs": "^0.0.1",
-    "@swc/register": "^0.1.10",
     "chalk": "4",
     "cli-table": "^0.3.11",
     "commander": "^11.1.0",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "tsx": "^3.14.0"
   }
 }

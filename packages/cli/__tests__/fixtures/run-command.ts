@@ -1,13 +1,16 @@
 import { exec } from 'node:child_process';
 import { join } from 'node:path';
+import pkg from '../../package.json';
 
 export async function runCliCommand(cmdAndArgs: string) {
-  const distBinPath = join(__dirname, '../../dist/cjs/cli.min.js');
+  const distBinPath = join(__dirname, '../../', pkg.bin.abmt);
   const migrationsPath = join(
     __dirname,
-    '../../../../__tests__/test-data/ts-project/migrations',
+    '../../', // cli root
+    '../../', // monorepo root
+    '__tests__/test-data/ts-project/migrations',
   );
-  const abmtCommand = `node "${distBinPath}" --migrations-path="${migrationsPath}"`;
+  const abmtCommand = `"${distBinPath}" --migrations-path="${migrationsPath}" --orm sequelize --sequelize-uri="sqlite::memory:"`;
 
   const command = cmdAndArgs.replace('abmt', abmtCommand);
   return await new Promise<{

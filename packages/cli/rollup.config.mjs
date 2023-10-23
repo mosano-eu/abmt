@@ -13,7 +13,7 @@ export default [
       {
         file: pkg.bin.abmt,
         format: 'cjs',
-      },
+      }
     ],
     plugins: [
       globals(),
@@ -24,12 +24,12 @@ export default [
       swc(
         defineRollupSwcOption({
           sourceMaps: true,
-          minify: true,
+          minify: false,
           jsc: {
             parser: {
               syntax: 'typescript',
             },
-            target: 'es2016',
+            target: 'es5',
           },
         }),
       ),

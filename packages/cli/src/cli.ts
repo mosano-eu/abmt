@@ -1,6 +1,5 @@
-#!/bin/env node
+#!/usr/bin/env node --loader tsx
 
-import './utils/swc-registration';
 import { Command } from 'commander';
 import dotenv from 'dotenv';
 
@@ -10,6 +9,24 @@ import { setupCmdToOwnORM } from './options/orm';
 import { setupCmdToOwnMigrations } from './options/migrations';
 import { checkoutCmd } from './commands/checkout';
 import { createCmd } from './commands/create';
+
+// import register from '@swc/register';
+// register();
+// register({
+//   module: {
+//     type: 'commonjs',
+//   },
+//   jsc: {
+//     target: 'es5',
+//     keepClassNames: true,
+//     loose: true,
+//     parser: {
+//       syntax: 'typescript',
+//       decorators: true,
+//       dynamicImport: true,
+//     },
+//   },
+// });
 
 (async function main() {
   dotenv.config({ path: '.env.local' });
