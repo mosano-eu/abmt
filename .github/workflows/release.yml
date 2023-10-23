@@ -23,7 +23,7 @@ jobs:
         uses: Saionaro/extract-package-version@v1.2.1
 
       - name: Setup
-        uses: ./.github/actions/setup
+        uses: ./.github/actions/setup.yml
 
       - name: Print version
         run: echo ${{ steps.extract_version.outputs.version }}
