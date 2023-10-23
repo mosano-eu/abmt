@@ -1,9 +1,15 @@
 name: Publish to npm on new tag
 
 on:
+  # push:
+  #   tags:
+  #     - '*'
   push:
-    tags:
-      - '*'
+    branches:
+      - "main"
+  pull_request:
+    branches:
+      - main
 
 jobs:
   publish:
