@@ -1,29 +1,15 @@
-name: test
+name: lint-and-test
 
 on:
   push:
     branches:
-      - "master"
+      - "main"
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: ["18"]
-    name: Lint on Node ${{ matrix.node }}
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node }}
-      - run: yarn install
-      - run: yarn lint
-
-  test:
+  lint-and-test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -34,6 +20,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
-      - run: yarn install
+      - run: yarn install --frozen-lockfile
+      - run: yarn lint
       - run: yarn build
       - run: yarn test
