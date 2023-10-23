@@ -3,6 +3,7 @@ import builtins from 'rollup-plugin-node-builtins';
 import { swc, defineRollupSwcOption } from 'rollup-plugin-swc3';
 import replace from '@rollup/plugin-replace';
 import pkg from './package.json' assert { type: 'json' };
+import { chmod } from 'node:fs/promises'
 
 const input = 'src/cli.ts';
 
@@ -33,6 +34,22 @@ export default [
           },
         }),
       ),
+      makeOutputExecutablePlugin()
     ],
   },
 ];
+
+
+
+function makeOutputExecutablePlugin() {
+  return {
+        name: 'writeBundle',
+        writeBundle: {
+          sequential: true,
+          order: 'post',
+          async handler({ file}) {
+            await chmod(file, 0o755);
+          }
+        }
+      }
+}
