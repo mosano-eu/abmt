@@ -40,5 +40,6 @@
     "sequelize": "^6.33.0",
     "sqlite3": "^5.1.6",
     "tedious": "^16.5.0"
-  }
+  },
+  "gitHead": "938739f6b799751414fbf27c874c8dd1a87ec253"
 }

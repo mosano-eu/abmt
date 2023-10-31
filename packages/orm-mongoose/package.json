@@ -34,5 +34,6 @@
     "lodash": "^4.17.21",
     "mongodb-memory-server": "^9.0.1",
     "mongoose": "^7.6.3"
-  }
+  },
+  "gitHead": "938739f6b799751414fbf27c874c8dd1a87ec253"
 }

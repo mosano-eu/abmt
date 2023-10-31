@@ -25,5 +25,6 @@
     "build": "rollup --config --sourcemap",
     "lint": "eslint",
     "test": "jest"
-  }
+  },
+  "gitHead": "938739f6b799751414fbf27c874c8dd1a87ec253"
 }

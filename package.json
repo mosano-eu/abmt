@@ -15,7 +15,8 @@
     "dev": "lerna exec --parallel --stream -- yarn dev",
     "build": "lerna run build",
     "lint": "lerna run lint",
-    "test": "lerna run test"
+    "test": "lerna run test",
+    "publish": "lerna run build && lerna publish"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.7",

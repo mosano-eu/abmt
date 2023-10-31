@@ -31,5 +31,6 @@
   },
   "devDependencies": {
     "@abmt/core": "^0.0.4"
-  }
+  },
+  "gitHead": "938739f6b799751414fbf27c874c8dd1a87ec253"
 }
