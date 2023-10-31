@@ -19,9 +19,9 @@
     "test": "jest"
   },
   "peerDependencies": {
-    "@abmt/core": "0.0.1",
-    "@abmt/orm-mongoose": "0.0.1",
-    "@abmt/orm-sequelize": "0.0.1",
+    "@abmt/core": "^0.0.3",
+    "@abmt/orm-mongoose": "^0.0.3",
+    "@abmt/orm-sequelize": "^0.0.3",
     "mongoose": "^7.6.3",
     "sequelize": "^6.33.0"
   },
