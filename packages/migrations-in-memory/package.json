@@ -1,6 +1,6 @@
 {
   "name": "@abmt/migrations-in-memory",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Provides ABMT the ability to capture migrations programatically",
   "repository": {
     "type": "git",
@@ -30,7 +30,7 @@
     "@abmt/core": "0.0.1"
   },
   "devDependencies": {
-    "@abmt/core": "^0.0.4"
+    "@abmt/core": "^0.0.5"
   },
   "gitHead": "938739f6b799751414fbf27c874c8dd1a87ec253"
 }
