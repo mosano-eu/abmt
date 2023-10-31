@@ -1,6 +1,6 @@
 {
   "name": "@abmt/core",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "ABMT core includes all the core functionality and typescript interfaces for extending it",
   "repository": {
     "type": "git",

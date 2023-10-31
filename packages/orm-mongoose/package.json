@@ -1,6 +1,6 @@
 {
   "name": "@abmt/orm-mongoose",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Allows ABMT to store and execute migrations with Mongoose",
   "repository": {
     "type": "git",
@@ -30,7 +30,7 @@
     "mongoose": "^7.6.3"
   },
   "dependencies": {
-    "@abmt/core": "^0.0.3",
+    "@abmt/core": "^0.0.4",
     "lodash": "^4.17.21",
     "mongodb-memory-server": "^9.0.1",
     "mongoose": "^7.6.3"
