@@ -1,6 +1,6 @@
 {
   "name": "@abmt/migrations-fs",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Provides ABMT the ability to capture migrations defined as individual files",
   "repository": {
     "type": "git",
@@ -30,6 +30,6 @@
     "@abmt/core": "0.0.1"
   },
   "devDependencies": {
-    "@abmt/core": "^0.0.2"
+    "@abmt/core": "^0.0.3"
   }
 }
