@@ -1,4 +1,4 @@
-export { MigratorEvents } from './events';
+export { MigratorEvents, EventType } from './events';
 export * from './storage-provider';
 export * from './context-provider';
 export * from './migrations-provider';
