@@ -11,23 +11,23 @@ import { checkoutCmd } from './commands/checkout';
 import { createCmd } from './commands/create';
 import { setupCmdToOwnMigrator } from './options/migrator';
 
-import register from '@swc/register';
+// import register from '@swc/register';
 // register();
-register({
-  module: {
-    type: 'commonjs',
-  },
-  jsc: {
-    target: 'es5',
-    keepClassNames: true,
-    loose: true,
-    parser: {
-      syntax: 'typescript',
-      decorators: true,
-      dynamicImport: true,
-    },
-  },
-});
+// register({
+//   module: {
+//     type: 'commonjs',
+//   },
+//   jsc: {
+//     target: 'es5',
+//     keepClassNames: true,
+//     loose: true,
+//     parser: {
+//       syntax: 'typescript',
+//       decorators: true,
+//       dynamicImport: true,
+//     },
+//   },
+// });
 
 (async function main() {
   dotenv.config({ path: '.env.local' });

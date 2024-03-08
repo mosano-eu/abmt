@@ -10,7 +10,7 @@
   "author": "Mosano Dev Team <dev@mosano.eu>",
   "license": "MIT",
   "bin": {
-    "abmt": "dist/cli.js"
+    "abmt": "node --experimental-loader tsx dist/cli.js"
   },
   "scripts": {
     "dev": "rollup --config --sourcemap --watch",
@@ -41,7 +41,6 @@
   },
   "dependencies": {
     "@abmt/migrations-fs": "^0.0.5",
-    "@swc/register": "^0.1.10",
     "chalk": "4",
     "cli-table": "^0.3.11",
     "commander": "^11.1.0",
