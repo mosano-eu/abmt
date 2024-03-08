@@ -9,24 +9,25 @@ import { setupCmdToOwnORM } from './options/orm';
 import { setupCmdToOwnMigrations } from './options/migrations';
 import { checkoutCmd } from './commands/checkout';
 import { createCmd } from './commands/create';
+import { setupCmdToOwnMigrator } from './options/migrator';
 
-// import register from '@swc/register';
+import register from '@swc/register';
 // register();
-// register({
-//   module: {
-//     type: 'commonjs',
-//   },
-//   jsc: {
-//     target: 'es5',
-//     keepClassNames: true,
-//     loose: true,
-//     parser: {
-//       syntax: 'typescript',
-//       decorators: true,
-//       dynamicImport: true,
-//     },
-//   },
-// });
+register({
+  module: {
+    type: 'commonjs',
+  },
+  jsc: {
+    target: 'es5',
+    keepClassNames: true,
+    loose: true,
+    parser: {
+      syntax: 'typescript',
+      decorators: true,
+      dynamicImport: true,
+    },
+  },
+});
 
 (async function main() {
   dotenv.config({ path: '.env.local' });
@@ -37,8 +38,11 @@ import { createCmd } from './commands/create';
     .addCommand(createCmd)
     .addCommand(checkoutCmd);
 
+  setupCmdToOwnMigrator(program);
   setupCmdToOwnORM(program);
   setupCmdToOwnMigrations(program);
 
   await program.parseAsync(process.argv);
+
+  process.exit();
 })();

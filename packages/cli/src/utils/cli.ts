@@ -28,10 +28,8 @@ export function log(cmd: Command, msg: string) {
 }
 
 export function error(err: Error) {
-  console.log(
-    chalk.gray(`
-  ${chalk.redBright('Error')}: ${chalk.white(err.name)}
-  ${chalk.white(err.message)}
-  `),
-  );
+  console.log(`
+${chalk.redBright(err.name || 'Error')}: ${chalk.white(err.message)}
+${chalk.gray(err.stack.split('\n').slice(1).join('\n'))}
+`);
 }

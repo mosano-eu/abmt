@@ -3,7 +3,7 @@ import { MigrationType } from '@abmt/core';
 import kebabCase from 'lodash/kebabCase';
 import { join } from 'node:path';
 import { writeFile } from 'node:fs/promises';
-import { buildMigrator } from '../utils/migrator';
+import { getMigrator } from '../options/migrator';
 import { captureErrors } from '../utils/error-handler';
 import { log } from '../utils/cli';
 
@@ -28,7 +28,7 @@ export const createCmd = createCommand('create')
   )
   .action(
     captureErrors(async (optionalName, options) => {
-      const { migrationsProvider } = await buildMigrator(createCmd);
+      const migrator = await getMigrator(createCmd);
 
       const timestamp = Date.now();
       const name = kebabCase(optionalName || 'new migration');
@@ -36,7 +36,7 @@ export const createCmd = createCommand('create')
       const migrationType = options.migrationType as MigrationType;
 
       const migrationPath = join(
-        migrationsProvider.migrationsPath,
+        migrator.migrationsProvider.migrationsPath,
         `${timestamp}-${name}.${migrationFormat}`,
       );
 

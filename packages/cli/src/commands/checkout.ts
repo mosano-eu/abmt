@@ -1,5 +1,5 @@
 import { createCommand } from 'commander';
-import { buildMigrator } from '../utils/migrator';
+import { getMigrator } from '../options/migrator';
 import { captureErrors } from '../utils/error-handler';
 import chalk from 'chalk';
 import { EventType } from '@abmt/core';
@@ -10,7 +10,7 @@ export const checkoutCmd = createCommand('checkout')
   .argument('[migration-id]', 'ID to the target migration')
   .action(
     captureErrors(async (migrationId) => {
-      const { migrator } = await buildMigrator(checkoutCmd);
+      const migrator = await getMigrator(checkoutCmd);
 
       migrator.on(EventType.Error, (err) => {
         error(err);

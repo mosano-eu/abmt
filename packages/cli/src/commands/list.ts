@@ -1,5 +1,5 @@
 import { createCommand } from 'commander';
-import { buildMigrator } from '../utils/migrator';
+import { getMigrator } from '../options/migrator';
 import { captureErrors } from '../utils/error-handler';
 import chalk from 'chalk';
 import Table from 'cli-table';
@@ -8,7 +8,7 @@ export const listCmd = createCommand('list')
   .description('lists all the migrations')
   .action(
     captureErrors(async () => {
-      const { migrator } = await buildMigrator(listCmd);
+      const migrator = await getMigrator(listCmd);
       const migrations = await migrator.list();
 
       const table = new Table({
