@@ -10,7 +10,7 @@
   "author": "Mosano Dev Team <dev@mosano.eu>",
   "license": "MIT",
   "bin": {
-    "abmt": "node --experimental-loader tsx dist/cli.js"
+    "abmt": "node --import=tsx dist/cli.js"
   },
   "scripts": {
     "dev": "rollup --config --sourcemap --watch",
