@@ -1,6 +1,6 @@
 {
   "name": "@abmt/cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "ABMT CLI - allows developers to use ABMT as a standalone framework",
   "repository": {
     "type": "git",
