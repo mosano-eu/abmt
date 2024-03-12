@@ -1,6 +1,6 @@
 {
   "name": "@abmt/orm-sequelize",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "description": "Allows ABMT to store and execute migrations with SQLite",
   "repository": {
     "type": "git",
@@ -27,7 +27,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@abmt/core": "^0.0.6",
+    "@abmt/core": "^0.1.0",
     "lodash": "^4.17.21",
     "mem": "6"
   },
